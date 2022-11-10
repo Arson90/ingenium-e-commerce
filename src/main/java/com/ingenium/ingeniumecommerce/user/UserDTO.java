@@ -1,7 +1,7 @@
 package com.ingenium.ingeniumecommerce.user;
 
-import com.ingenium.ingeniumecommerce.address.Address;
-import com.ingenium.ingeniumecommerce.customer.Customer;
+import com.ingenium.ingeniumecommerce.address.AddressDTO;
+import com.ingenium.ingeniumecommerce.customer.CustomerDTO;
 import lombok.Getter;
 
 @Getter
@@ -9,6 +9,6 @@ public class UserDTO {
     private String name;
     private String login;
     private String password;
-    private Customer customer;
-    private Address address;
+    private CustomerDTO customerDTO;
+    private AddressDTO addressDTO;
 }

@@ -28,6 +28,20 @@ public class Product {
     @AttributeOverride(name = "totalPrice", column = @Column(name = "price"))
     private Money price;
 
+    public Product updateCurrentProduct(final ProductDTO productDTO) {
+        return Product.builder()
+                .productName(productDTO.getProductName())
+                .price(productDTO.getPrice())
+                .build();
+    }
+    public ProductView toProductView() {
+        return ProductView.builder()
+                .id(this.id)
+                .productName(this.productName)
+                .price(this.price)
+                .build();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

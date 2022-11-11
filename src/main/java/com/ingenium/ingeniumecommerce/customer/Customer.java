@@ -21,4 +21,14 @@ public class Customer {
     private String lastName;
     private String email;
     private String phoneNumber;
+
+    public CustomerView toCustomerView() {
+        return CustomerView.builder()
+                .id(this.id)
+                .firstName(this.firstName)
+                .lastName(this.lastName)
+                .email(this.email)
+                .phoneNumber(this.phoneNumber)
+                .build();
+    }
 }

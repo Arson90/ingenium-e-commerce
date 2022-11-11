@@ -28,4 +28,12 @@ public class User {
     private Customer customer;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    public UserView toAnonymousUserView() {
+        return UserView.builder()
+                .name(this.name)
+                .customerView(this.customer.toCustomerView())
+                .addressView(this.address.toAddressView())
+                .build();
+    }
 }

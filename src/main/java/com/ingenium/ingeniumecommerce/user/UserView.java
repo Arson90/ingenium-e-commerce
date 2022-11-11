@@ -1,7 +1,7 @@
 package com.ingenium.ingeniumecommerce.user;
 
-import com.ingenium.ingeniumecommerce.address.Address;
-import com.ingenium.ingeniumecommerce.customer.Customer;
+import com.ingenium.ingeniumecommerce.address.AddressView;
+import com.ingenium.ingeniumecommerce.customer.CustomerView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +16,6 @@ public class UserView {
     private String name;
     private String login;
     private String password;
-    private Customer customer;
-    private Address address;
+    private CustomerView customerView;
+    private AddressView addressView;
 }

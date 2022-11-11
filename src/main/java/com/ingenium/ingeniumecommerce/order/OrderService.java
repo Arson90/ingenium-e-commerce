@@ -1,5 +1,11 @@
 package com.ingenium.ingeniumecommerce.order;
 
+import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
+
+import java.util.List;
+
 public interface OrderService {
-    Order createOrder(final OrderDTO orderDTO);
+    OrderView findOrderById(final Long orderId);
+    List<OrderView> findAllOrders();
+    OrderView createOrder(final OrderDTO orderDTO, final PaymentType paymentType);
 }

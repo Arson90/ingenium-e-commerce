@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/fexmon")
+@RequestMapping("/ingenium")
 public class ProductController {
     private final ProductService productService;
 

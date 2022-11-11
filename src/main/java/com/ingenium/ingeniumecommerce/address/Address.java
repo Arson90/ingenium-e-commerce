@@ -23,4 +23,16 @@ public class Address {
     private String town;
     private String postalCode;
     private String country;
+
+    public AddressView toAddressView() {
+        return AddressView.builder()
+                .id(this.id)
+                .streetName(this.streetName)
+                .streetNumber(this.streetNumber)
+                .apartmentNumber(this.apartmentNumber)
+                .town(this.town)
+                .postalCode(this.postalCode)
+                .country(this.country)
+                .build();
+    }
 }

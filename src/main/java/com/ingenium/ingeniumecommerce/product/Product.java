@@ -42,6 +42,10 @@ public class Product {
                 .build();
     }
 
+    public Money getPrice() {
+        return price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

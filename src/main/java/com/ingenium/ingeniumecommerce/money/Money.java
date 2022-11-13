@@ -14,4 +14,16 @@ public class Money {
     public Money(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    public Money multiply(final int multiplier) {
+        return new Money(totalPrice.multiply(BigDecimal.valueOf(multiplier)));
+    }
+
+    public Money add(final Money price) {
+        return new Money(this.totalPrice.add(price.totalPrice));
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
 }

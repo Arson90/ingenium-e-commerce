@@ -1,5 +1,6 @@
 package com.ingenium.ingeniumecommerce.customer;
 
+import com.ingenium.ingeniumecommerce.address.AddressView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,4 +16,5 @@ public class CustomerView {
     private String lastName;
     private String email;
     private String phoneNumber;
+    private AddressView addressView;
 }

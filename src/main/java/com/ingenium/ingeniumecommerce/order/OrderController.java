@@ -2,6 +2,7 @@ package com.ingenium.ingeniumecommerce.order;
 
 import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +36,9 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
     @PostMapping("/orders/{paymentType}")
-    ResponseEntity<OrderView> createOrder(@RequestBody final OrderDTO orderDTO, @PathVariable final PaymentType paymentType) {
-        final OrderView orderView = this.orderService.createOrder(orderDTO, paymentType);
+    ResponseEntity<OrderView> createOrder(@RequestBody final OrderDTO orderDTO, @PathVariable final PaymentType paymentType,
+                                          @CookieValue(value = "cartId", required = false) final String cartCookieId) {
+        final OrderView orderView = this.orderService.createOrder(orderDTO, paymentType, cartCookieId);
         return ResponseEntity.ok(orderView);
     }
 }

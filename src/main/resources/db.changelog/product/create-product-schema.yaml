@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-product-table
+      author: arek
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_product
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: product_name
+                  type: varchar(128)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: decimal
+            schemaName: ingenium
+            tableName: products

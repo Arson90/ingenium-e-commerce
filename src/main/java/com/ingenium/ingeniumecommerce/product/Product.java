@@ -12,16 +12,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
+@Table(name = "products")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Long id;
     private String productName;
     @Embedded
@@ -29,10 +30,9 @@ public class Product {
     private Money price;
 
     public Product updateCurrentProduct(final ProductDTO productDTO) {
-        return Product.builder()
-                .productName(productDTO.getProductName())
-                .price(productDTO.getPrice())
-                .build();
+        this.productName = productDTO.getProductName();
+        this.price = productDTO.getPrice();
+        return this;
     }
     public ProductView toProductView() {
         return ProductView.builder()

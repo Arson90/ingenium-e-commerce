@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: product/create-product-schema.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: product/insert-products.sql
+      relativeToChangelogFile: true

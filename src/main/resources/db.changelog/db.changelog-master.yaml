@@ -1,7 +1,22 @@
 databaseChangeLog:
   - include:
-      file: product/create-product-schema.yaml
+      file: cart/create-cart-schema.sql
+      relativeToChangelogFile: true
+  - include:
+      file: product/create-product-schema.sql
+      relativeToChangelogFile: true
+  - include:
+      file: cartEntry/create-cart-entry-schema.sql
       relativeToChangelogFile: true
   - include:
       file: product/insert-products.sql
       relativeToChangelogFile: true
+  - include:
+      file: address/create-address-schema.sql
+      relativeToChangelogFile: true
+  - include:
+      file: customer/create-customer-schema.sql
+      relativeToChangelogFile: true
+#  - include:
+#      file: order/create-order-schema.sql
+#      relativeToChangelogFile: true

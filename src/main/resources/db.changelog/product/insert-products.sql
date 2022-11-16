@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset arek:insert-products
+--changeset arek:3 runOnChange:true
 insert into products (id, product_name, price) values (1, 'Samsung Galaxy S22+ (Android) 128 GB', 990);
 insert into products (id, product_name, price) values (2, 'Samsung Galaxy S22+ (Android) 256 GB', 1099);
 insert into products (id, product_name, price) values (3, 'OnePlus 10 Pro 5G (2022) 256 GB', 560);

@@ -1,23 +1,24 @@
 package com.ingenium.ingeniumecommerce.cart;
 
-import com.ingenium.ingeniumecommerce.money.Money;
+import com.ingenium.ingeniumecommerce.cartEntry.CartEntryView;
 import com.ingenium.ingeniumecommerce.product.Product;
-import com.ingenium.ingeniumecommerce.productEntry.ProductEntry;
+import com.ingenium.ingeniumecommerce.cartEntry.CartEntry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.math.BigDecimal;
+import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "carts")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,11 +26,9 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<ProductEntry> productEntries;
-    @Embedded
-    private Money totalPrice;
-
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private Set<CartEntry> cartEntries;
+    
     public String getId() {
         return String.valueOf(id);
     }
@@ -37,8 +36,7 @@ public class Cart {
     public CartView toCartView() {
         return CartView.builder()
                 .id(this.id)
-                .productEntries(this.productEntries)
-                .totalPrice(this.totalPrice)
+                .cartEntryView(toCartEntryView())
                 .build();
     }
 
@@ -48,29 +46,29 @@ public class Cart {
         } else {
             addNewProduct(product, quantity);
         }
-        this.calculateTotalPrice();
         return this;
     }
 
+    private CartEntryView toCartEntryView() {
+        return this.cartEntries.stream().iterator().next().toCartEntryView();
+    }
+
     private boolean isProductExistsInTheCart(final Product product) {
-        return this.productEntries.stream()
-                .anyMatch(productEntry -> productEntry.isContainsProduct(product));
+        return this.cartEntries != null && this.cartEntries.stream()
+                .anyMatch(cartEntry -> cartEntry.isContainsProduct(product));
     }
 
     private void increaseQuantityOfExistingProduct(final Product product, final int quantity) {
-        this.productEntries.stream()
-                .filter(productEntry -> productEntry.isContainsProduct(product))
-                .forEach(productEntry -> productEntry.increaseQuantity(quantity));
+        this.cartEntries.stream()
+                .filter(cartEntry -> cartEntry.isContainsProduct(product))
+                .forEach(cartEntry -> cartEntry.increaseQuantity(quantity));
     }
 
     private void addNewProduct(final Product product, final int quantity) {
-        final ProductEntry productEntry = new ProductEntry(product, quantity);
-        this.productEntries.add(productEntry);
-    }
-
-    private void calculateTotalPrice() {
-        this.totalPrice = this.productEntries.stream()
-                .map(ProductEntry::calculateEntryPrice)
-                .reduce(new Money(BigDecimal.ZERO), Money::add);
+        final CartEntry cartEntry = new CartEntry(product, quantity, this);
+        if (this.cartEntries == null) {
+            this.cartEntries = new HashSet<>();
+        }
+        this.cartEntries.add(cartEntry);
     }
 }

@@ -1,5 +1,6 @@
-package com.ingenium.ingeniumecommerce.productEntry;
+package com.ingenium.ingeniumecommerce.cartEntry;
 
+import com.ingenium.ingeniumecommerce.cart.Cart;
 import com.ingenium.ingeniumecommerce.money.Money;
 import com.ingenium.ingeniumecommerce.product.Product;
 import lombok.AllArgsConstructor;
@@ -11,24 +12,40 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "cart_entries")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntry {
+public class CartEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    @ManyToOne
+    private Cart cart;
     private int quantity;
 
-    public ProductEntry(final Product product, final int quantity) {
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public CartEntry(final Product product, final int quantity, final Cart cart) {
         this.product = product;
         this.quantity = quantity;
+        this.cart = cart;
+    }
+
+    public CartEntryView toCartEntryView() {
+        return CartEntryView.builder()
+                .productView(this.product.toProductView())
+                .quantity(this.quantity)
+                .build();
     }
 
     public boolean isContainsProduct(final Product product) {

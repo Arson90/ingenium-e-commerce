@@ -40,21 +40,24 @@ public class CartServiceImpl implements CartService{
                 .orElseThrow(() -> ProductNotFoundException.createForProductId(productId));
 
         if (cartCookieId == null) {
-            return createNewCartAndAddProduct(product, quantity, response);
+            final Cart savedCart = createCartAndAddProduct(product, quantity);
+            cookieService.createCookieForCart(savedCart.getId(), response);
+            return savedCart.toCartView();
         }
-        return addProductToExistingCart(product, quantity, cartCookieId);
+        return addProduct(product, quantity, cartCookieId);
     }
 
-    private CartView createNewCartAndAddProduct(final Product product, final int quantity, final HttpServletResponse response) {
-        final Cart createdCart = CartFactoryUtility.createCart(product, quantity);
-        final Cart savedCart = cartCommandRepository.save(createdCart);
-        cookieService.createCookieForCart(savedCart.getId(), response);
-        return savedCart.toCartView();
+    private Cart createCartAndAddProduct(final Product product, final int quantity) {
+        final Cart cart = new Cart();
+        cart.addProduct(product, quantity);
+        return cartCommandRepository.save(cart);
     }
-    private CartView addProductToExistingCart(final Product product, final int quantity, final String cartCookieId) {
+
+    private CartView addProduct(final Product product, final int quantity, final String cartCookieId) {
         final Long cartId = Long.valueOf(cartCookieId);
         return cartCommandRepository.findById(cartId)
-                .map(cart -> cart.addProduct(product, quantity).toCartView())
+                .map(cart -> cart.addProduct(product, quantity))
+                .map(Cart::toCartView)
                 .orElseThrow(() -> CartNotFoundException.createForCartId(cartId));
     }
 }

@@ -7,6 +7,7 @@ import com.ingenium.ingeniumecommerce.product.ProductQueryRepository;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -35,6 +36,7 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
+    @Transactional
     public CartView addProductToCart(final Long productId, final int quantity, final String cartCookieId, final HttpServletResponse response) {
         final Product product = productQueryRepository.findById(productId)
                 .orElseThrow(() -> ProductNotFoundException.createForProductId(productId));

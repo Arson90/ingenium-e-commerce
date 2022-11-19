@@ -1,18 +1,17 @@
 package com.ingenium.ingeniumecommerce.order;
 
 import com.ingenium.ingeniumecommerce.address.Address;
-import com.ingenium.ingeniumecommerce.address.AddressDTO;
 import com.ingenium.ingeniumecommerce.address.AddressFactoryUtility;
+import com.ingenium.ingeniumecommerce.cart.Cart;
+import com.ingenium.ingeniumecommerce.cart.CartCommandRepository;
 import com.ingenium.ingeniumecommerce.cart.CartNotFoundException;
-import com.ingenium.ingeniumecommerce.cart.CartQueryRepository;
-import com.ingenium.ingeniumecommerce.cart.CartView;
+import com.ingenium.ingeniumecommerce.cartEntry.CartEntry;
 import com.ingenium.ingeniumecommerce.customer.Customer;
-import com.ingenium.ingeniumecommerce.customer.CustomerDTO;
 import com.ingenium.ingeniumecommerce.customer.CustomerFactoryUtils;
 import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
-import com.ingenium.ingeniumecommerce.productEntry.ProductEntry;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -20,12 +19,12 @@ import java.util.Set;
 public class OrderServiceImpl implements OrderService{
     private final OrderCommandRepository orderCommandRepository;
     private final OrderQueryRepository orderQueryRepository;
-    private final CartQueryRepository cartQueryRepository;
+    private final CartCommandRepository cartCommandRepository;
 
-    public OrderServiceImpl(OrderCommandRepository orderCommandRepository, OrderQueryRepository orderQueryRepository, CartQueryRepository cartQueryRepository) {
+    public OrderServiceImpl(OrderCommandRepository orderCommandRepository, OrderQueryRepository orderQueryRepository, CartCommandRepository cartCommandRepository) {
         this.orderCommandRepository = orderCommandRepository;
         this.orderQueryRepository = orderQueryRepository;
-        this.cartQueryRepository = cartQueryRepository;
+        this.cartCommandRepository = cartCommandRepository;
     }
 
     @Override
@@ -40,23 +39,23 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional
     public OrderView createOrder(final OrderDTO orderDTO, final PaymentType paymentType, final String cartCookieId) {
-        final Customer customer = toCustomer(orderDTO.getCustomerDTO());
-        final Address address = toAddress(orderDTO.getAddressDTO());
+        final Customer customer = CustomerFactoryUtils.createCustomer(orderDTO.getCustomerDTO());
+        final Address address = AddressFactoryUtility.createAddress(orderDTO.getAddressDTO());
         customer.addAddressToCustomer(address);
 
         final Long cartId = Long.valueOf(cartCookieId);
-        final Set<ProductEntry> productEntries = this.cartQueryRepository.findCartById(cartId).map(CartView::getProductEntries)
+        final Set<CartEntry> cartEntries = this.cartCommandRepository.findById(cartId)
+                .map(Cart::getCartEntries)
                 .orElseThrow(() -> CartNotFoundException.createForCartId(cartId));
-        final Order order = OrderFactoryUtils.createOrder(customer, productEntries, paymentType);
+
+        final Order order = new Order();
+        order.addProductToOrderEntry(cartEntries);
+        order.addCustomerAndAddressToOrder(customer);
+        order.addPaymentTypeToOrder(paymentType);
+        order.calculateTotalPrice();
+
         return this.orderCommandRepository.save(order).toOrderView();
-    }
-
-    private Customer toCustomer(final CustomerDTO customerDTO) {
-        return CustomerFactoryUtils.createCustomer(customerDTO);
-    }
-
-    private Address toAddress(final AddressDTO addressDTO) {
-        return AddressFactoryUtility.createAddress(addressDTO);
     }
 }

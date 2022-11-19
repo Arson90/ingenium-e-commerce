@@ -29,6 +29,10 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
+    public void addAddressToCustomer(final Address address) {
+        this.address = address;
+    }
+
     public CustomerView toCustomerView() {
         return CustomerView.builder()
                 .id(this.id)
@@ -38,9 +42,5 @@ public class Customer {
                 .phoneNumber(this.phoneNumber)
                 .addressView(this.address.toAddressView())
                 .build();
-    }
-
-    public void addAddressToCustomer(final Address address) {
-        this.address = address;
     }
 }

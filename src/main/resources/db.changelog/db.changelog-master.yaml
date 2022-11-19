@@ -17,6 +17,9 @@ databaseChangeLog:
   - include:
       file: customer/create-customer-schema.sql
       relativeToChangelogFile: true
-#  - include:
-#      file: order/create-order-schema.sql
-#      relativeToChangelogFile: true
+  - include:
+      file: order/create-order-schema.sql
+      relativeToChangelogFile: true
+  - include:
+      file: orderEntry/create-order-entry-schema.sql
+      relativeToChangelogFile: true

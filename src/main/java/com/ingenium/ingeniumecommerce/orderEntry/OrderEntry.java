@@ -1,6 +1,7 @@
-package com.ingenium.ingeniumecommerce.cartEntry;
+package com.ingenium.ingeniumecommerce.orderEntry;
 
-import com.ingenium.ingeniumecommerce.cart.Cart;
+import com.ingenium.ingeniumecommerce.money.Money;
+import com.ingenium.ingeniumecommerce.order.Order;
 import com.ingenium.ingeniumecommerce.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,39 +16,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cart_entries")
+@Table(name = "order_entries")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartEntry {
+public class OrderEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    @ManyToOne
-    private Cart cart;
     private int quantity;
+    @ManyToOne
+    private Order order;
 
-    public CartEntry(final Product product, final int quantity, final Cart cart) {
+    public OrderEntry(final Product product, final int quantity, final Order order) {
         this.product = product;
         this.quantity = quantity;
-        this.cart = cart;
+        this.order = order;
     }
 
-    public CartEntryView toCartEntryView() {
-        return CartEntryView.builder()
+    public OrderEntryView toOrderEntryView() {
+        return OrderEntryView.builder()
                 .productView(this.product.toProductView())
                 .quantity(this.quantity)
                 .build();
     }
 
-    public boolean isContainsProduct(final Product product) {
-        return this.product.equals(product);
-    }
-
-    public void increaseQuantity(final int quantity) {
-        this.quantity += quantity;
+    public Money calculateEntryPrice() {
+        return this.product.getPrice().multiply(this.quantity);
     }
 }

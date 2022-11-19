@@ -26,6 +26,15 @@ public class Address {
     private String postalCode;
     private String country;
 
+    public Address(final AddressDTO addressDTO) {
+        this.streetName = addressDTO.getStreetName();
+        this.streetNumber = addressDTO.getStreetNumber();
+        this.apartmentNumber = addressDTO.getApartmentNumber();
+        this.town = addressDTO.getTown();
+        this.postalCode = addressDTO.getPostalCode();
+        this.country = addressDTO.getCountry();
+    }
+
     public AddressView toAddressView() {
         return AddressView.builder()
                 .id(this.id)

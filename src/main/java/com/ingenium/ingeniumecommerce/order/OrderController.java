@@ -35,6 +35,7 @@ public class OrderController {
         }
         return ResponseEntity.noContent().build();
     }
+
     @PostMapping("/orders/{paymentType}")
     ResponseEntity<OrderView> createOrder(@RequestBody final OrderDTO orderDTO, @PathVariable final PaymentType paymentType,
                                           @CookieValue(value = "cartId", required = false) final String cartCookieId) {

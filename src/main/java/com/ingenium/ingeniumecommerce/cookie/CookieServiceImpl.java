@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class CookieServiceImpl implements CookieService{
     private static final int SECONDS_IN_DAY = 86400;
-    private static final String CART_COOKIE_PATH = "http://localhost:8080/fexmon/cart";
+    private static final String CART_COOKIE_PATH = "/ingenium";
 
     public void createCookieForCart(final String cartCookieId, final HttpServletResponse response) {
         final Cookie cookie = new Cookie("cartId", cartCookieId);

@@ -29,11 +29,8 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    public Customer(final CustomerDTO customerDTO) {
-        this.firstName = customerDTO.getFirstName();
-        this.lastName = customerDTO.getLastName();
-        this.email = customerDTO.getEmail();
-        this.phoneNumber = customerDTO.getPhoneNumber();
+    public void addAddressToCustomer(final Address address) {
+        this.address = address;
     }
 
     public CustomerView toCustomerView() {
@@ -45,9 +42,5 @@ public class Customer {
                 .phoneNumber(this.phoneNumber)
                 .addressView(this.address.toAddressView())
                 .build();
-    }
-
-    public void addAddressToCustomer(final Address address) {
-        this.address = address;
     }
 }

@@ -29,6 +29,13 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
+    public Customer(final CustomerDTO customerDTO) {
+        this.firstName = customerDTO.getFirstName();
+        this.lastName = customerDTO.getLastName();
+        this.email = customerDTO.getEmail();
+        this.phoneNumber = customerDTO.getPhoneNumber();
+    }
+
     public CustomerView toCustomerView() {
         return CustomerView.builder()
                 .id(this.id)

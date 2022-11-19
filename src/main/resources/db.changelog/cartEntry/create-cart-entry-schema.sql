@@ -1,5 +1,5 @@
---liquibase formatted sql
---changeset arek:2 runOnChange:true
+-- liquibase formatted sql
+-- changeset arek:2 runOnChange:true
 CREATE TABLE cart_entries (
     id BIGINT NOT NULL AUTO_INCREMENT,
     product_id BIGINT NOT NULL,

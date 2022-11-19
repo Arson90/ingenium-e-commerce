@@ -33,11 +33,8 @@ public class Cart {
         return String.valueOf(id);
     }
 
-    public CartView toCartView() {
-        return CartView.builder()
-                .id(this.id)
-                .cartEntryView(toCartEntryView())
-                .build();
+    public Set<CartEntry> getCartEntries() {
+        return cartEntries;
     }
 
     public Cart addProduct(final Product product, final int quantity) {
@@ -49,8 +46,19 @@ public class Cart {
         return this;
     }
 
-    private CartEntryView toCartEntryView() {
-        return this.cartEntries.stream().iterator().next().toCartEntryView();
+    public CartView toCartView() {
+        return CartView.builder()
+                .id(this.id)
+                .cartEntryView(toCartEntryView())
+                .build();
+    }
+
+    private Set<CartEntryView> toCartEntryView() {
+        final Set<CartEntryView> entries = new HashSet<>();
+        for (CartEntry cartEntry : this.cartEntries) {
+            entries.add(cartEntry.toCartEntryView());
+        }
+        return entries;
     }
 
     private boolean isProductExistsInTheCart(final Product product) {

@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Set;
+
 @Builder
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class CartView {
     private Long id;
-    private CartEntryView cartEntryView;
+    private Set<CartEntryView> cartEntryView;
 }

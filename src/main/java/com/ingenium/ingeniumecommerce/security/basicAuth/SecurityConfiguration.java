@@ -2,6 +2,7 @@ package com.ingenium.ingeniumecommerce.security.basicAuth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +25,8 @@ public class SecurityConfiguration{
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/ingenium/admin").hasAuthority("ADMIN")
                 .antMatchers("/ingenium/user").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/ingenium").permitAll()
+                .antMatchers(HttpMethod.GET,"/ingenium/products").permitAll()
+                .antMatchers(HttpMethod.POST,"/ingenium/register").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin();
         return http.build();

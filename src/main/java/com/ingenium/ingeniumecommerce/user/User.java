@@ -2,6 +2,7 @@ package com.ingenium.ingeniumecommerce.user;
 
 import com.ingenium.ingeniumecommerce.customer.Customer;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,5 +32,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User changePassword(final String password) {
+        this.password = password;
+        return this;
     }
 }

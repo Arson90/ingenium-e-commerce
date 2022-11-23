@@ -1,7 +1,6 @@
 package com.ingenium.ingeniumecommerce.cart;
 
 public class CartNotFoundException extends RuntimeException{
-
     public CartNotFoundException(final String message) {
         super(message);
     }

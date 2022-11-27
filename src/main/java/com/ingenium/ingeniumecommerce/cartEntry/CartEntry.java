@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class CartEntry {
     @JoinColumn(name = "product_id")
     private Product product;
     @ManyToOne
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
     private int quantity;
 
@@ -45,6 +47,10 @@ public class CartEntry {
 
     public boolean isContainsProduct(final Product product) {
         return this.product.equals(product);
+    }
+
+    public boolean isContainsProductById(final Long productId) {
+        return this.product.getId().equals(productId);
     }
 
     public void increaseQuantity(final int quantity) {

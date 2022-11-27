@@ -26,17 +26,9 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartEntry> cartEntries;
     
-    public String getId() {
-        return String.valueOf(id);
-    }
-
-    public Set<CartEntry> getCartEntries() {
-        return cartEntries;
-    }
-
     public Cart addProduct(final Product product, final int quantity) {
         if (isProductExistsInTheCart(product)) {
             increaseQuantityOfExistingProduct(product, quantity);
@@ -46,11 +38,23 @@ public class Cart {
         return this;
     }
 
+    public boolean deleteProductById(final Long productId) {
+        return this.cartEntries.removeIf(cartEntry -> cartEntry.isContainsProductById(productId));
+    }
+
     public CartView toCartView() {
         return CartView.builder()
                 .id(this.id)
                 .cartEntryView(toCartEntryView())
                 .build();
+    }
+
+    public String getId() {
+        return String.valueOf(id);
+    }
+
+    public Set<CartEntry> getCartEntries() {
+        return cartEntries;
     }
 
     private Set<CartEntryView> toCartEntryView() {

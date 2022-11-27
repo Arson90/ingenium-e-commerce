@@ -2,6 +2,7 @@ package com.ingenium.ingeniumecommerce.cart;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +42,12 @@ class CartController {
                                               final HttpServletResponse response) {
         final CartView cartView = this.cartService.addProductToCart(productId, quantity, cartCookieId, response);
         return ResponseEntity.ok().body(cartView);
+    }
+
+    @DeleteMapping("/carts/products/{productId}")
+    ResponseEntity<Void> deleteProductFromCart(@CookieValue(value = "cartId", required = false) final String cartCookie,
+                                               @PathVariable final Long productId) {
+        cartService.deleteProductFromCart(productId, cartCookie);
+        return ResponseEntity.ok().build();
     }
 }

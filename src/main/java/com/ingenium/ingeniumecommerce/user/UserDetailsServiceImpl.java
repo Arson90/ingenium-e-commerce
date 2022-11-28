@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userCommandRepository.findByUsername(username)
-                .map(CustomUserDetails::new)
+                .map(UserCustomDetails::new)
                 .orElseThrow(() -> UserNotFoundException.createForUserName(username));
     }
 }

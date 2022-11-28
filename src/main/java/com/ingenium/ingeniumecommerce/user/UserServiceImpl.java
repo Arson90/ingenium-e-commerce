@@ -6,6 +6,8 @@ import com.ingenium.ingeniumecommerce.customer.CustomerFactoryUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
     private final UserCommandRepository userCommandRepository;
@@ -16,6 +18,17 @@ public class UserServiceImpl implements UserService{
         this.userCommandRepository = userCommandRepository;
         this.userQueryRepository = userQueryRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public UserView findUserById(final Long userId) {
+        return this.userQueryRepository.findUserById(userId)
+                .orElseThrow(() -> UserNotFoundException.createForUserId(userId));
+    }
+
+    @Override
+    public List<UserView> findAllUsers() {
+        return this.userQueryRepository.findAllBy();
     }
 
     @Override

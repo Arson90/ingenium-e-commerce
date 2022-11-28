@@ -8,10 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class CustomUserDetails implements UserDetails, CredentialsContainer {
+public class UserCustomDetails implements UserDetails, CredentialsContainer {
     private User user;
 
-    public CustomUserDetails(User user) {
+    public UserCustomDetails(User user) {
         this.user = user;
     }
 

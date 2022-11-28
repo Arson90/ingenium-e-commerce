@@ -39,6 +39,10 @@ public class Product {
                 .build();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Money getPrice() {
         return price;
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -47,6 +48,18 @@ public class CartServiceImpl implements CartService{
             return savedCart.toCartView();
         }
         return addProduct(product, quantity, cartCookieId);
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteProductFromCart(final Long productId, final String cartCookieId) {
+        if (cartCookieId != null) {
+            final Long cartId = Long.valueOf(cartCookieId);
+            return this.cartCommandRepository.findById(cartId)
+                    .map(cart -> cart.deleteProductById(productId))
+                    .orElseThrow(() -> CartNotFoundException.createForCartId(productId));
+        }
+        return false;
     }
 
     private Cart createCartAndAddProduct(final Product product, final int quantity) {

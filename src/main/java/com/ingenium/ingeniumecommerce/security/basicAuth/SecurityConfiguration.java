@@ -27,6 +27,7 @@ public class SecurityConfiguration{
                 .antMatchers("/ingenium/user").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(HttpMethod.GET,"/ingenium/products").permitAll()
                 .antMatchers(HttpMethod.POST,"/ingenium/register").permitAll()
+                .antMatchers("/ingenium/carts/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin();
         return http.build();

@@ -23,8 +23,6 @@ public class SecurityConfiguration{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/ingenium/admin").hasAuthority("ADMIN")
-                .antMatchers("/ingenium/user").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(HttpMethod.GET,"/ingenium/products").permitAll()
                 .antMatchers(HttpMethod.POST,"/ingenium/register").permitAll()
                 .antMatchers("/ingenium/carts/**").permitAll()

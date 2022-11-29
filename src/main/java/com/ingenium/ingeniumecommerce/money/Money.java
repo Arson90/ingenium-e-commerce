@@ -1,10 +1,14 @@
 package com.ingenium.ingeniumecommerce.money;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 
 @Embeddable
 public class Money {
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Digits(integer = 6, fraction = 2)
     private final BigDecimal price;
 
     protected Money() {

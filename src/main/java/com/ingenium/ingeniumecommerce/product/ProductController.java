@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    ResponseEntity<ProductView> saveProduct(@RequestBody final ProductDTO productDTO) {
+    ResponseEntity<ProductView> saveProduct(@Valid @RequestBody final ProductDTO productDTO) {
         final ProductView productView = this.productService.createProduct(productDTO);
         return ResponseEntity.ok(productView);
     }

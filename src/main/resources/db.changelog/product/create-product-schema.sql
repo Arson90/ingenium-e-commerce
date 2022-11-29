@@ -4,6 +4,6 @@
 CREATE TABLE products (
     id BIGINT NOT NULL AUTO_INCREMENT,
     product_name VARCHAR(128) NOT NULL,
-    price DOUBLE NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (id)
 );

@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService{
 
         final Order order = new Order();
         order.addProductToOrderEntry(cartEntries);
-        order.addCustomerAndAddressToOrder(customer);
+        order.addCustomerToOrder(customer);
         order.addPaymentTypeToOrder(paymentType);
         order.calculateTotalPrice();
 

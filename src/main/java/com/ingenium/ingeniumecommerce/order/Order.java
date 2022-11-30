@@ -54,7 +54,7 @@ public class Order {
         }
     }
 
-    public void addCustomerAndAddressToOrder(final Customer customer) {
+    public void addCustomerToOrder(final Customer customer) {
         this.customer = customer;
     }
 

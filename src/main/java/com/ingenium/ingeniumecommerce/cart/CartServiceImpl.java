@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -28,7 +27,7 @@ public class CartServiceImpl implements CartService{
     @Override
     public CartView findCartById(final Long cartId) {
         return this.cartQueryRepository.findCartById(cartId)
-                .orElseThrow(() ->CartNotFoundException.createForCartId(cartId));
+                .orElseThrow(() -> CartNotFoundException.createForCartId(cartId));
     }
 
     @Override

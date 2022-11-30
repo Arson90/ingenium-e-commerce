@@ -3,10 +3,10 @@ package com.ingenium.ingeniumecommerce.cartEntry;
 import com.ingenium.ingeniumecommerce.cart.Cart;
 import com.ingenium.ingeniumecommerce.product.Product;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "cart_entries")
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

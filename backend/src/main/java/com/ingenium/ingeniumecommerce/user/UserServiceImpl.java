@@ -42,9 +42,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void changePassword(final Long userId, final String password) {
-        this.userCommandRepository.findById(userId)
+    public Long changePassword(final Long userId, final String password) {
+        return this.userCommandRepository.findById(userId)
                 .map(user -> user.changePassword(getEncodedPassword(password)))
+                .map(User::getId)
                 .orElseThrow(() -> UserNotFoundException.createForUserId(userId));
     }
 

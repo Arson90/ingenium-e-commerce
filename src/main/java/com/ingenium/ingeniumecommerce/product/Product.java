@@ -3,6 +3,7 @@ package com.ingenium.ingeniumecommerce.product;
 import com.ingenium.ingeniumecommerce.money.Money;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embedded;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "products")
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
@@ -37,14 +39,6 @@ public class Product {
                 .productName(this.productName)
                 .price(this.price)
                 .build();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Money getPrice() {
-        return price;
     }
 
     @Override

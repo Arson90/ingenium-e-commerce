@@ -1,7 +1,7 @@
 package com.ingenium.ingeniumecommerce.user;
 
+import com.ingenium.ingeniumecommerce.customer.CustomerRequestDTO;
 import com.ingenium.ingeniumecommerce.validation.Constant;
-import com.ingenium.ingeniumecommerce.customer.CustomerDTO;
 import lombok.Getter;
 
 import javax.validation.Valid;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-public class UserDTO {
+public class UserRequestDTO {
     @NotBlank(message = "Username is mandatory")
     @Pattern(regexp = Constant.DefaultRegex.ANY_WORD_CHARACTER_REGEX, message = Constant.DefaultRegex.ANY_WORD_CHARACTER_MESSAGE)
     private String username;
@@ -19,5 +19,5 @@ public class UserDTO {
     private String password;
 
     @Valid
-    private CustomerDTO customerDTO;
+    private CustomerRequestDTO customerRequestDTO;
 }

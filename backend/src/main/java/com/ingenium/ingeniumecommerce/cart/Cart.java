@@ -1,8 +1,7 @@
 package com.ingenium.ingeniumecommerce.cart;
 
-import com.ingenium.ingeniumecommerce.cartEntry.CartEntryView;
-import com.ingenium.ingeniumecommerce.product.Product;
 import com.ingenium.ingeniumecommerce.cartEntry.CartEntry;
+import com.ingenium.ingeniumecommerce.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -42,13 +41,6 @@ public class Cart {
         return this.cartEntries.removeIf(cartEntry -> cartEntry.isContainsProductById(productId));
     }
 
-    public CartView toCartView() {
-        return CartView.builder()
-                .id(this.id)
-                .cartEntryView(toCartEntryView())
-                .build();
-    }
-
     public String getId() {
         return String.valueOf(id);
     }
@@ -57,13 +49,6 @@ public class Cart {
         return cartEntries;
     }
 
-    private Set<CartEntryView> toCartEntryView() {
-        final Set<CartEntryView> entries = new HashSet<>();
-        for (CartEntry cartEntry : this.cartEntries) {
-            entries.add(cartEntry.toCartEntryView());
-        }
-        return entries;
-    }
 
     private boolean isProductExistsInTheCart(final Product product) {
         return this.cartEntries != null && this.cartEntries.stream()

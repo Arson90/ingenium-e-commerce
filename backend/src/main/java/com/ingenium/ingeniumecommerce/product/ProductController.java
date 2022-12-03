@@ -44,15 +44,15 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    ResponseEntity<ProductView> saveProduct(@Valid @RequestBody final ProductDTO productDTO) {
-        final ProductView productView = this.productService.createProduct(productDTO);
-        return ResponseEntity.ok(productView);
+    ResponseEntity<ProductResponseDTO> saveProduct(@Valid @RequestBody final ProductRequestDTO productRequestDTO) {
+        final ProductResponseDTO productResponseDTO = this.productService.createProduct(productRequestDTO);
+        return ResponseEntity.ok(productResponseDTO);
     }
 
     @PutMapping("/products/{productId}")
-    ResponseEntity<ProductView> updateProduct(@RequestBody final ProductDTO productDTO, @PathVariable final Long productId) {
-        final ProductView productView = this.productService.updateProduct(productDTO, productId);
-        return ResponseEntity.ok(productView);
+    ResponseEntity<ProductResponseDTO> updateProduct(@RequestBody final ProductRequestDTO productRequestDTO, @PathVariable final Long productId) {
+        final ProductResponseDTO productResponseDTO = this.productService.updateProduct(productRequestDTO, productId);
+        return ResponseEntity.ok(productResponseDTO);
     }
 
     @DeleteMapping("/products/{productId}")

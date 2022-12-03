@@ -40,22 +40,23 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     @Transactional
-    public OrderView createOrder(final OrderDTO orderDTO, final PaymentType paymentType, final String cartCookieId) {
-        final Customer customer = CustomerFactoryUtils.createCustomer(orderDTO.getCustomerDTO());
-        final Address address = AddressFactoryUtility.createAddress(orderDTO.getAddressDTO());
-        customer.addAddressToCustomer(address);
-
+    public OrderResponseDTO createOrder(final OrderRequestDTO orderRequestDTO, final PaymentType paymentType, final String cartCookieId) {
+        final Address address = AddressFactoryUtility
+                .convertAddressRequestDtoToAddress(orderRequestDTO.getAddressRequestDTO());
+        final Customer customer = CustomerFactoryUtils
+                .convertCustomerRequestDtoToCustomer(orderRequestDTO.getCustomerRequestDTO(), address);
         final Long cartId = Long.valueOf(cartCookieId);
         final Set<CartEntry> cartEntries = this.cartCommandRepository.findById(cartId)
                 .map(Cart::getCartEntries)
                 .orElseThrow(() -> CartNotFoundException.createForCartId(cartId));
 
-        final Order order = new Order();
-        order.addProductToOrderEntry(cartEntries);
+        Order order = new Order();
+        order.addCartEntriesToOrderEntries(cartEntries);
         order.addCustomerToOrder(customer);
         order.addPaymentTypeToOrder(paymentType);
         order.calculateTotalPrice();
+        order = this.orderCommandRepository.save(order);
 
-        return this.orderCommandRepository.save(order).toOrderView();
+        return OrderFactoryUtils.convertOrderToOrderResponseDto(order);
     }
 }

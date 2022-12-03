@@ -33,16 +33,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductView createProduct(final ProductDTO productDTO) {
-        final Product product = ProductFactoryUtility.createProduct(productDTO);
-        return this.productCommandRepository.save(product).toProductView();
+    public ProductResponseDTO createProduct(final ProductRequestDTO productRequestDTO) {
+        Product product = ProductFactoryUtils.convertProductRequestDtoToProduct(productRequestDTO);
+        product = this.productCommandRepository.save(product);
+        return ProductFactoryUtils.convertProductToProductResponseDto(product);
     }
 
     @Override
     @Transactional
-    public ProductView updateProduct(final ProductDTO productDTO, final Long productId) {
+    public ProductResponseDTO updateProduct(final ProductRequestDTO productRequestDTO, final Long productId) {
         return this.productCommandRepository.findById(productId)
-                .map(product -> product.updateCurrentProduct(productDTO).toProductView())
+                .map(product -> product.updateCurrentProduct(productRequestDTO))
+                .map(ProductFactoryUtils::convertProductToProductResponseDto)
                 .orElseThrow(() -> ProductNotFoundException.createForProductId(productId));
     }
 

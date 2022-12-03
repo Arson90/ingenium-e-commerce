@@ -28,22 +28,15 @@ public class CartEntry {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    private int quantity;
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
-    private int quantity;
 
     public CartEntry(final Product product, final int quantity, final Cart cart) {
         this.product = product;
         this.quantity = quantity;
         this.cart = cart;
-    }
-
-    public CartEntryView toCartEntryView() {
-        return CartEntryView.builder()
-                .productView(this.product.toProductView())
-                .quantity(this.quantity)
-                .build();
     }
 
     public boolean isContainsProduct(final Product product) {

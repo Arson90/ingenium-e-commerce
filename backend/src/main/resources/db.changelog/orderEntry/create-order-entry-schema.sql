@@ -10,4 +10,4 @@ CREATE TABLE order_entries (
 
 ALTER TABLE order_entries
     ADD CONSTRAINT order_entries_products_id FOREIGN KEY (product_id) REFERENCES products(id),
-    ADD CONSTRAINT order_entries_carts_id FOREIGN KEY (order_id) REFERENCES carts(id)
+    ADD CONSTRAINT order_entries_order_id FOREIGN KEY (order_id) REFERENCES orders(id)

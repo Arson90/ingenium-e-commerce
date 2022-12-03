@@ -28,17 +28,10 @@ public class Product {
     @Embedded
     private Money price;
 
-    public Product updateCurrentProduct(final ProductDTO productDTO) {
-        this.productName = productDTO.getProductName();
-        this.price = productDTO.getPrice();
+    public Product updateCurrentProduct(final ProductRequestDTO productRequestDTO) {
+        this.productName = productRequestDTO.getProductName();
+        this.price = productRequestDTO.getPrice();
         return this;
-    }
-    public ProductView toProductView() {
-        return ProductView.builder()
-                .id(this.id)
-                .productName(this.productName)
-                .price(this.price)
-                .build();
     }
 
     @Override
@@ -48,6 +41,7 @@ public class Product {
         Product product = (Product) o;
         return id.equals(product.id);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

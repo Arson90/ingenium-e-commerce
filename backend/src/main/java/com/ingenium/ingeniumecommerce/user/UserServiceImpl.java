@@ -32,12 +32,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void createUser(final UserDTO userDTO) {
-        final Customer customer = CustomerFactoryUtils.createCustomer(userDTO.getCustomerDTO());
-        final Address address = new Address();
-        customer.addAddressToCustomer(address);
-        final String encodedPassword = getEncodedPassword(userDTO.getPassword());
-        final User user = UserFactoryUtils.createUser(userDTO, encodedPassword, customer);
+    public void createUser(final UserRequestDTO userRequestDTO) {
+        final Customer customer = CustomerFactoryUtils
+                .convertCustomerRequestDtoToCustomer(userRequestDTO.getCustomerRequestDTO(), new Address());
+        final String encodedPassword = getEncodedPassword(userRequestDTO.getPassword());
+        final User user = UserFactoryUtils.createUser(userRequestDTO, encodedPassword, customer);
         this.userQueryRepository.save(user);
     }
 

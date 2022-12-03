@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class UserCustomDetails implements UserDetails, CredentialsContainer {
-    private User user;
+    private final User user;
 
     public UserCustomDetails(User user) {
         this.user = user;

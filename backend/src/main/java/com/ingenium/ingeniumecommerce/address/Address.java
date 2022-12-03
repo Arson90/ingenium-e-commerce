@@ -2,6 +2,7 @@ package com.ingenium.ingeniumecommerce.address;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "addresses")
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
@@ -25,25 +27,4 @@ public class Address {
     private String town;
     private String postalCode;
     private String country;
-
-    public Address(final AddressDTO addressDTO) {
-        this.streetName = addressDTO.getStreetName();
-        this.streetNumber = addressDTO.getStreetNumber();
-        this.apartmentNumber = addressDTO.getApartmentNumber();
-        this.town = addressDTO.getTown();
-        this.postalCode = addressDTO.getPostalCode();
-        this.country = addressDTO.getCountry();
-    }
-
-    public AddressView toAddressView() {
-        return AddressView.builder()
-                .id(this.id)
-                .streetName(this.streetName)
-                .streetNumber(this.streetNumber)
-                .apartmentNumber(this.apartmentNumber)
-                .town(this.town)
-                .postalCode(this.postalCode)
-                .country(this.country)
-                .build();
-    }
 }

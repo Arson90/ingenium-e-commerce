@@ -2,9 +2,9 @@ package com.ingenium.ingeniumecommerce.user;
 
 import com.ingenium.ingeniumecommerce.customer.CustomerView;
 
-public class UserView {
-    private Long id;
-    private String username;
-    private String role;
-    private CustomerView customerView;
+public interface UserView {
+    Long getId();
+    String getUsername();
+    String getRole();
+    CustomerView getCustomer();
 }

@@ -37,11 +37,11 @@ class CartController {
     }
 
     @PostMapping("/carts/{productId}/quantity/{quantity}")
-    ResponseEntity<CartView> addProductToCart(@PathVariable final Long productId, @PathVariable final int quantity,
+    ResponseEntity<CartResponseDTO> addProductToCart(@PathVariable final Long productId, @PathVariable final int quantity,
                                               @CookieValue(value = "cartId", required = false) final String cartCookieId,
                                               final HttpServletResponse response) {
-        final CartView cartView = this.cartService.addProductToCart(productId, quantity, cartCookieId, response);
-        return ResponseEntity.ok().body(cartView);
+        final CartResponseDTO cartResponseDTO = this.cartService.addProductToCart(productId, quantity, cartCookieId, response);
+        return ResponseEntity.ok().body(cartResponseDTO);
     }
 
     @DeleteMapping("/carts/products/{productId}")

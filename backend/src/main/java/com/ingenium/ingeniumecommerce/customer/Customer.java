@@ -3,6 +3,7 @@ package com.ingenium.ingeniumecommerce.customer;
 import com.ingenium.ingeniumecommerce.address.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -16,8 +17,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customers")
 @Builder
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,19 +30,4 @@ public class Customer {
     private String phoneNumber;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-
-    public void addAddressToCustomer(final Address address) {
-        this.address = address;
-    }
-
-    public CustomerView toCustomerView() {
-        return CustomerView.builder()
-                .id(this.id)
-                .firstName(this.firstName)
-                .lastName(this.lastName)
-                .email(this.email)
-                .phoneNumber(this.phoneNumber)
-                .addressView(this.address.toAddressView())
-                .build();
-    }
 }

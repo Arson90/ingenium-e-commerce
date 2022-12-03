@@ -5,9 +5,9 @@ import com.ingenium.ingeniumecommerce.customer.Customer;
 import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
 import com.ingenium.ingeniumecommerce.money.Money;
 import com.ingenium.ingeniumecommerce.orderEntry.OrderEntry;
-import com.ingenium.ingeniumecommerce.orderEntry.OrderEntryView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.AttributeOverride;
@@ -30,6 +30,7 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
@@ -46,7 +47,7 @@ public class Order {
     @AttributeOverride(name = "price", column = @Column(name = "total_price"))
     private Money totalPrice;
 
-    public void addProductToOrderEntry(final Set<CartEntry> cartEntries) {
+    public void addCartEntriesToOrderEntries(final Set<CartEntry> cartEntries) {
         this.orderEntries = new HashSet<>();
         for (CartEntry cartEntry: cartEntries) {
             final OrderEntry orderEntry = new OrderEntry(cartEntry.getProduct(), cartEntry.getQuantity(), this);
@@ -66,23 +67,5 @@ public class Order {
         this.totalPrice = this.orderEntries.stream()
                 .map(OrderEntry::calculateEntryPrice)
                 .reduce(new Money(BigDecimal.ZERO), Money::add);
-    }
-
-    public OrderView toOrderView() {
-        return OrderView.builder()
-                .id(this.id)
-                .customerView(this.customer.toCustomerView())
-                .orderEntryView(toOrderEntryView())
-                .paymentType(this.paymentType)
-                .totalPrice(this.totalPrice)
-                .build();
-    }
-
-    private Set<OrderEntryView> toOrderEntryView() {
-        final Set<OrderEntryView> entries = new HashSet<>();
-        for (OrderEntry orderEntry : this.orderEntries) {
-            entries.add(orderEntry.toOrderEntryView());
-        }
-        return entries;
     }
 }

@@ -39,7 +39,7 @@ public class ProductServiceImplTest {
     @Test
     public void shouldExecuteOneTime() {
         //given
-        final ProductDTO productDTO = new ProductDTO("testProduct", new Money(BigDecimal.valueOf(100)));
+        final ProductRequestDTO productDTO = new ProductRequestDTO("testProduct", new Money(BigDecimal.valueOf(100)));
         when(productCommandRepository.save(any())).thenAnswer(i -> i.getArgument(0));
 
         //when
@@ -55,15 +55,15 @@ public class ProductServiceImplTest {
         final Product product = ProductDataUtils.createProduct(1L, "testProduct", new Money(BigDecimal.valueOf(150.00).setScale(2, RoundingMode.UNNECESSARY)));
         final String productName = product.getProductName();
         final BigDecimal productPrice = product.getPrice().getPrice();
-        final ProductDTO productDTO = new ProductDTO("productDTO", new Money(BigDecimal.valueOf(10.00).setScale(2, RoundingMode.UNNECESSARY)));
+        final ProductRequestDTO productDTO = new ProductRequestDTO("productDTO", new Money(BigDecimal.valueOf(10.00).setScale(2, RoundingMode.UNNECESSARY)));
 
         //when
         when(productCommandRepository.findById(anyLong())).thenReturn(Optional.of(product));
 
         //then
-        final ProductView productView = productServiceImpl.updateProduct(productDTO, 1L);
-        final String viewProductName = productView.getProductName();
-        final BigDecimal viewProductPrice = productView.getPrice().getPrice();
+        final ProductResponseDTO productResponseDTO = productServiceImpl.updateProduct(productDTO, 1L);
+        final String viewProductName = productResponseDTO.getProductName();
+        final BigDecimal viewProductPrice = productResponseDTO.getPrice().getPrice();
 
         assertNotEquals(productName, viewProductName);
         assertNotEquals(productPrice, viewProductPrice);

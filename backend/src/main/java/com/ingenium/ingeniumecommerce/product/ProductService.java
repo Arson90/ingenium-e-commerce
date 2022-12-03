@@ -9,9 +9,9 @@ public interface ProductService {
 
     List<ProductView> findAllProducts();
 
-    ProductView createProduct(final ProductDTO productDTO);
+    ProductResponseDTO createProduct(final ProductRequestDTO productRequestDTO);
 
-    ProductView updateProduct(final ProductDTO productDTO, final Long productId);
+    ProductResponseDTO updateProduct(final ProductRequestDTO productRequestDTO, final Long productId);
 
     void deleteProduct(final Long productId);
 }

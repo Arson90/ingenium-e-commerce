@@ -1,5 +1,6 @@
 package com.ingenium.ingeniumecommerce.orderEntry;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ingenium.ingeniumecommerce.money.Money;
 import com.ingenium.ingeniumecommerce.order.Order;
 import com.ingenium.ingeniumecommerce.product.Product;
@@ -29,19 +30,13 @@ public class OrderEntry {
     private Product product;
     private int quantity;
     @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
     public OrderEntry(final Product product, final int quantity, final Order order) {
         this.product = product;
         this.quantity = quantity;
         this.order = order;
-    }
-
-    public OrderEntryView toOrderEntryView() {
-        return OrderEntryView.builder()
-                .productView(this.product.toProductView())
-                .quantity(this.quantity)
-                .build();
     }
 
     public Money calculateEntryPrice() {

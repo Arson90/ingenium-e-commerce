@@ -2,8 +2,7 @@ package com.ingenium.ingeniumecommerce.cart;
 
 import com.ingenium.ingeniumecommerce.cartEntry.CartEntry;
 import com.ingenium.ingeniumecommerce.cartEntry.CartEntryDataUtils;
-import com.ingenium.ingeniumecommerce.cartEntry.CartEntryView;
-import com.ingenium.ingeniumecommerce.cookie.CookieService;
+import com.ingenium.ingeniumecommerce.cartEntry.CartEntryResponseDTO;
 import com.ingenium.ingeniumecommerce.money.Money;
 import com.ingenium.ingeniumecommerce.product.Product;
 import com.ingenium.ingeniumecommerce.product.ProductDataUtils;
@@ -23,8 +22,6 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,8 +32,7 @@ public class CartServiceImplTest {
     private CartQueryRepository cartQueryRepository;
     @Mock
     private ProductQueryRepository productQueryRepository;
-    @Mock
-    private CookieService cookieService;
+
     @InjectMocks
     private CartServiceImpl cartServiceImpl;
 
@@ -54,18 +50,21 @@ public class CartServiceImplTest {
         //given
         final Product product = ProductDataUtils.createProduct(1L, "testProduct", new Money(new BigDecimal("10.00")));
         when(productQueryRepository.findById(anyLong())).thenReturn(Optional.ofNullable(product));
-        doNothing().when(cookieService).createCookieForCart(anyString(), any(HttpServletResponse.class));
         when(cartCommandRepository.save(any())).thenAnswer(i -> i.getArgument(0));
 
         //when
-        final CartView cartView = cartServiceImpl.addProductToCart(1L, 1, null, any(HttpServletResponse.class));
-        final CartEntryView cartEntryView = cartView.getCartEntryView().iterator().next();
+        final CartResponseDTO cartResponseDTO = cartServiceImpl.addProductToCart(1L, 1, null, any(HttpServletResponse.class));
+        final CartEntryResponseDTO cartEntryResponseDTO = cartResponseDTO.getCartEntriesResponseDTO().iterator().next();
+        final int cartEntriesSize = cartResponseDTO.getCartEntriesResponseDTO().size();
+        final int productQuantity = cartEntryResponseDTO.getQuantity();
+        final Long productId = cartEntryResponseDTO.getProductResponseDTO().getId();
+        final BigDecimal price = cartEntryResponseDTO.getProductResponseDTO().getPrice().getPrice();
 
         //then
-        Assert.assertEquals(1, cartView.getCartEntryView().size());
-        Assert.assertEquals(1, cartEntryView.getQuantity());
-        Assert.assertEquals(Long.valueOf(1), cartEntryView.getProductView().getId());
-        Assert.assertEquals(BigDecimal.valueOf(10.00).setScale(2, RoundingMode.UNNECESSARY), cartEntryView.getProductView().getPrice().getPrice());
+        Assert.assertEquals(1, cartEntriesSize);
+        Assert.assertEquals(1, productQuantity);
+        Assert.assertEquals(Long.valueOf(1), productId);
+        Assert.assertEquals(BigDecimal.valueOf(10.00).setScale(2, RoundingMode.UNNECESSARY), price);
     }
 
     @Test

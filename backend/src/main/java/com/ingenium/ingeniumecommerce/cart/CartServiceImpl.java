@@ -37,14 +37,14 @@ public class CartServiceImpl implements CartService{
 
     @Override
     @Transactional
-    public CartView addProductToCart(final Long productId, final int quantity, final String cartCookieId, final HttpServletResponse response) {
+    public CartResponseDTO addProductToCart(final Long productId, final int quantity, final String cartCookieId, final HttpServletResponse response) {
         final Product product = productQueryRepository.findById(productId)
                 .orElseThrow(() -> ProductNotFoundException.createForProductId(productId));
 
         if (cartCookieId == null) {
             final Cart savedCart = createCartAndAddProduct(product, quantity);
             cookieService.createCookieForCart(savedCart.getId(), response);
-            return savedCart.toCartView();
+            return CartFactoryUtils.convertCartToCartResponseDto(savedCart);
         }
         return addProduct(product, quantity, cartCookieId);
     }
@@ -67,11 +67,11 @@ public class CartServiceImpl implements CartService{
         return cartCommandRepository.save(cart);
     }
 
-    private CartView addProduct(final Product product, final int quantity, final String cartCookieId) {
+    private CartResponseDTO addProduct(final Product product, final int quantity, final String cartCookieId) {
         final Long cartId = Long.valueOf(cartCookieId);
         return cartCommandRepository.findById(cartId)
                 .map(cart -> cart.addProduct(product, quantity))
-                .map(Cart::toCartView)
+                .map(CartFactoryUtils::convertCartToCartResponseDto)
                 .orElseThrow(() -> CartNotFoundException.createForCartId(cartId));
     }
 }

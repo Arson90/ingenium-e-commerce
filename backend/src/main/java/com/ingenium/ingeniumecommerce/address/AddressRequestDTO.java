@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-public class AddressDTO {
+public class AddressRequestDTO {
     @NotBlank(message = "Street name is mandatory")
     @Pattern(regexp = Constant.DefaultRegex.CHARACTER_ONLY_REGEX, message = Constant.DefaultRegex.CHARACTER_ONLY_MESSAGE)
     private String streetName;

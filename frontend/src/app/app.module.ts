@@ -8,9 +8,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {AppComponent} from './app.component';
 import {CartPageComponent} from './components/pages/cart-page/cart-page.component';
 import {CartItemsCounterComponent} from "./components/pages/cart-page/cart-items-counter/cart-items-counter.component";
-import {
-  CartRelatedProductComponent
-} from './components/pages/cart-page/cart-related-product/cart-related-product.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
 import {ProductPageComponent} from './components/pages/product-page/product-page.component';
@@ -45,7 +42,6 @@ export const hydrationMetaReducer = (
     FooterComponent,
     CartPageComponent,
     CartItemsCounterComponent,
-    CartRelatedProductComponent,
     ProductPageComponent,
     ProductItemComponent,
   ],

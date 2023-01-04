@@ -1,0 +1,86 @@
+<div class="container-sm">
+  <div class="row">
+
+    <div class="col-md-8">
+
+      <div *ngIf="(counter$ | async) === 0">
+        <div class="row">
+          <h3 class="mb-10 font-weight-semi-bold text-center">Cart is empty</h3>
+        </div>
+        <hr>
+      </div>
+
+      <div class="row mb-3" *ngFor="let cartEntry of cartEntries$ | async">
+        <div class="card card-body">
+          <div class="row">
+
+            <div class="col-sm-3">
+              <img src="https://i.imgur.com/Aj0L4Wa.jpg" width="150" height="150" alt="">
+            </div>
+
+            <div class="col-sm-3">
+              <h5>{{cartEntry.product.productName}}</h5>
+            </div>
+
+            <div class="col-sm-3 justify-content-center">
+              <div class="col w-50 text-center mb-5 mx-auto">
+                <input class="form-control form-control-lg" (click)="changeQuantity(inputNumber.value, cartEntry.product)" #inputNumber type="number" name="myInput" step="1" value="{{cartEntry.quantity}}" min="1" max="10" required>
+              </div>
+            </div>
+
+            <div class="col-sm-3 justify-content-end">
+              <h3 class="mb-0 font-weight-semi-bold">${{cartEntry.product.price.price}}</h3>
+              <button type="button" class="btn btn-outline-dark mt-4" (click)="removeProduct(cartEntry.product.id)">
+                <fa-icon [icon]="trash"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 min-vh-100">
+      <div class="card card-body">
+
+        <div class="row">
+          <h3 class="mb-10 font-weight-semi-bold">Order Summary</h3>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Shopping cost:</h5>
+          </div>
+          <div class="col-sm-6 text-end text-success">
+            <p>FREE</p>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Total:</h5>
+          </div>
+          <div class="col-sm-6 text-end">
+            <p>${{total$ | async}}</p>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn btn-outline-success">Checkout</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+

@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Product } from "../../types/product";
+import { ProductResponseDTO } from "../../types/ProductResponseDTO";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = environment.apiProductsUrl;
-  constructor(public http: HttpClient) { }
+  private apiUrl = environment.api.PRODUCTS;
+  constructor(private http: HttpClient) { }
 
-  public getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}`);
+  public getProducts(): Observable<ProductResponseDTO[]> {
+    return this.http.get<ProductResponseDTO[]>(`${this.apiUrl}`);
   }
 
-
+  public getProductById(productId: number): Observable<ProductResponseDTO> {
+    return this.http.get<ProductResponseDTO>(`${this.apiUrl}/${productId}`);
+  }
 }

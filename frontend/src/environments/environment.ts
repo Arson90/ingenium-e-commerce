@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiProductsUrl: 'http://localhost:8080/ingenium/products'
+  api: {
+    PRODUCTS: 'http://localhost:8080/ingenium/products'
+  }
 };
 
 /*

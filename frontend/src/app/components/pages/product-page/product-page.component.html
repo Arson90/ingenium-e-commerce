@@ -1,0 +1,28 @@
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="col mb-5" *ngFor="let product of products">
+        <div class="card h-100">
+          <!-- ProductResponseDTO details-->
+          <div class="card-body p-4">
+            <img src="https://i.imgur.com/Aj0L4Wa.jpg" class="rounded mx-auto d-block" width="150" height="150" alt="">
+            <div class="text-center">
+              <div class="fw-bold mb-1">$ {{product.price.price}}</div>
+                <a class="link-secondary text-decoration-none" [routerLink]="['/product', product.id]">{{product.productName}}</a>
+              <div class="product-name"></div>
+            </div>
+          </div>
+          <div class="mb-4 d-flex justify-content-center">
+            <div class="ratings">
+              <fa-icon [ngStyle]="{'color': 'orange'}" [icon]="star"></fa-icon>
+              <fa-icon [ngStyle]="{'color': 'orange'}" [icon]="star"></fa-icon>
+              <fa-icon [ngStyle]="{'color': 'orange'}" [icon]="star"></fa-icon>
+              <fa-icon [ngStyle]="{'color': 'orange'}" [icon]="star"></fa-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

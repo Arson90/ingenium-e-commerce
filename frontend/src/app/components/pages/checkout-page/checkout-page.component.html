@@ -1,0 +1,193 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card card-body">
+        <h4 class="mb-4">Billing Address</h4>
+        <form [formGroup]="formData" (ngSubmit)="onClick(formData.value)" >
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+              <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="alert alert-danger">
+                <div *ngIf="firstName?.errors?.['required']">
+                  First name is required.
+                </div>
+                <div *ngIf="firstName?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+              <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="alert alert-danger">
+                <div *ngIf="lastName?.errors?.['required']">
+                  Last name is required.
+                </div>
+                <div *ngIf="lastName?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="you@example.com" required>
+            <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="alert alert-danger">
+              <div *ngIf="email?.errors?.['required']">
+                Email is required.
+              </div>
+              <div *ngIf="email?.errors?.['email']">
+                Please enter valid email, you@example.com
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone number</label>
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="500600700" required>
+            <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)" class="alert alert-danger">
+              <div *ngIf="phoneNumber?.errors?.['required']">
+                Phone number is required.
+              </div>
+              <div *ngIf="phoneNumber?.errors?.['pattern']">
+                Please enter valid phone number, 123456789
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="streetName" class="form-label">Street Name</label>
+              <input type="text" class="form-control" id="streetName" formControlName="streetName" required>
+              <div *ngIf="streetName?.invalid && (streetName?.dirty || streetName?.touched)" class="alert alert-danger">
+                <div *ngIf="streetName?.errors?.['required']">
+                  Street name is required.
+                </div>
+                <div *ngIf="streetName?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="streetNumber" class="form-label">Street Number</label>
+              <input type="text" class="form-control" id="streetNumber" formControlName="streetNumber" required>
+              <div *ngIf="streetNumber?.invalid && (streetNumber?.dirty || streetNumber?.touched)" class="alert alert-danger">
+                <div *ngIf="streetNumber?.errors?.['required']">
+                  Street number is required.
+                </div>
+                <div *ngIf="streetNumber?.errors?.['pattern']">
+                  Min one number and only numbers are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="apartmentNumber" class="form-label">Apartment Number</label>
+              <input type="text" class="form-control" id="apartmentNumber" formControlName="apartmentNumber">
+              <div *ngIf="apartmentNumber?.invalid && (apartmentNumber?.dirty || apartmentNumber?.touched)" class="alert alert-danger">
+                <div *ngIf="apartmentNumber?.errors?.['pattern']">
+                  Min one number and only numbers are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="city" class="form-label">City</label>
+              <input type="text" class="form-control" id="city" formControlName="city" required>
+              <div *ngIf="city?.invalid && (city?.dirty || city?.touched)" class="alert alert-danger">
+                <div *ngIf="city?.errors?.['required']">
+                  City is required.
+                </div>
+                <div *ngIf="city?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="postalCode" class="form-label">Postal Code</label>
+              <input type="text" class="form-control" id="postalCode" formControlName="postalCode" placeholder="12-345" required>
+              <div *ngIf="postalCode?.invalid && (postalCode?.dirty || postalCode?.touched)" class="alert alert-danger">
+                <div *ngIf="postalCode?.errors?.['required']">
+                  Postal code is required.
+                </div>
+                <div *ngIf="postalCode?.errors?.['pattern']">
+                  Please enter valid postal code, 12-345
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" class="form-control" id="country" formControlName="country" required>
+              <div *ngIf="country?.invalid && (country?.dirty || country?.touched)" class="alert alert-danger">
+                <div *ngIf="country?.errors?.['required']">
+                  Country is required.
+                </div>
+                <div *ngIf="country?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="mb-5">
+          <h4 class="mb-4">Payment</h4>
+          <div class="d-block my-3">
+            <div class="form-check">
+              <input id="creditCard" value="creditCard" name="paymentMethod" type="radio" class="form-check-input" formControlName="paymentMethod" required>
+              <label class="form-check-label" for="creditCard">Credit Card</label>
+            </div>
+            <div class="form-check">
+              <input id="paypal" value="paypal" name="paymentMethod" type="radio" class="form-check-input" formControlName="paymentMethod" required>
+              <label class="form-check-label" for="paypal">Paypal</label>
+            </div>
+            <div class="form-check">
+              <input id="cash" value="cash" name="paymentMethod" type="radio" class="form-check-input" formControlName="paymentMethod" required>
+              <label class="form-check-label" for="cash">Cash</label>
+            </div>
+          </div>
+          <hr class="mb-5">
+          <div class="d-grid gap-2">
+            <button class="btn btn-outline-success mb-4" type="submit" [disabled]="!formData.valid">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-body">
+
+        <div class="row">
+          <h4 class="mb-10 font-weight-semi-bold">Order Summary</h4>
+        </div>
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Items:</h5>
+          </div>
+          <div class="col-sm-6 text-end">
+            <p>{{items$ | async}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Shopping cost:</h5>
+          </div>
+          <div class="col-sm-6 text-end text-success">
+            <p>FREE</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Total:</h5>
+          </div>
+          <div class="col-sm-6 text-end">
+            <p>${{totalPrice$ | async}}</p>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+

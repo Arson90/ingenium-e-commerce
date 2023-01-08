@@ -14,6 +14,9 @@ import {ProductPageComponent} from './components/pages/product-page/product-page
 import {ProductItemComponent} from './components/pages/product-page/product-item/product-item.component';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {cartReducer} from "./stores/cart-store/reducer/cart.reducer";
+import {CheckoutPageComponent} from './components/pages/checkout-page/checkout-page.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {checkoutReducer} from "./stores/cart-store/reducer/checkout.reducer";
 
 export const hydrationMetaReducer = (
   reducer: ActionReducer<any>
@@ -44,16 +47,18 @@ export const hydrationMetaReducer = (
     CartItemsCounterComponent,
     ProductPageComponent,
     ProductItemComponent,
+    CheckoutPageComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     FontAwesomeModule,
-    StoreModule.forRoot({cart: cartReducer}, {metaReducers: [hydrationMetaReducer]}),
+    StoreModule.forRoot({cart: cartReducer, billingAddress: checkoutReducer}, {metaReducers: [hydrationMetaReducer]}),
     StoreDevtoolsModule.instrument({
       maxAge: 15
-    })
+    }),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

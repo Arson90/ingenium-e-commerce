@@ -1,10 +1,10 @@
 package com.ingenium.ingeniumecommerce.order;
 
-import com.ingenium.ingeniumecommerce.cartEntry.CartEntry;
 import com.ingenium.ingeniumecommerce.customer.Customer;
 import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
 import com.ingenium.ingeniumecommerce.money.Money;
 import com.ingenium.ingeniumecommerce.orderEntry.OrderEntry;
+import com.ingenium.ingeniumecommerce.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +25,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -47,10 +48,10 @@ public class Order {
     @AttributeOverride(name = "price", column = @Column(name = "total_price"))
     private Money totalPrice;
 
-    public void addCartEntriesToOrderEntries(final Set<CartEntry> cartEntries) {
+    public void addCartEntriesToOrderEntries(final Map<Product, Integer> cartEntries) {
         this.orderEntries = new HashSet<>();
-        for (CartEntry cartEntry: cartEntries) {
-            final OrderEntry orderEntry = new OrderEntry(cartEntry.getProduct(), cartEntry.getQuantity(), this);
+        for (Map.Entry<Product, Integer> entry : cartEntries.entrySet()) {
+            final OrderEntry orderEntry = new OrderEntry(entry.getKey(), entry.getValue(), this);
             this.orderEntries.add(orderEntry);
         }
     }

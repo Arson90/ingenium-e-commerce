@@ -1,5 +1,5 @@
 import {createReducer, on} from "@ngrx/store";
-import {addProduct, changeQuantity, removeProduct} from "../actions/cart-page.actions";
+import {addProduct, changeQuantity, clearCartData, removeProduct} from "../actions/cart-page.actions";
 import {CartEntry} from "../../../types/CartEntry";
 import {Cart} from "../../../types/Cart";
 import {ProductResponseDTO} from "../../../types/ProductResponseDTO";
@@ -27,6 +27,13 @@ export const cartReducer = createReducer(
     return {
       ...state,
       cartEntries: getQuantity(state.cartEntries, payload.quantity, payload.product)
+    }
+  }),
+  on(clearCartData, (state) => {
+    return {
+      ...state,
+      cartEntries: [],
+      totalPrice: 0
     }
   })
 )

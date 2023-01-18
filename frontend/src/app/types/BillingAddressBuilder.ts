@@ -1,4 +1,5 @@
 import {BillingAddress} from "./BillingAddress";
+import {PaymentType} from "./PaymentType";
 
 export class BillingAddressBuilder {
   billingAddress: BillingAddress;
@@ -15,7 +16,7 @@ export class BillingAddressBuilder {
       city: "",
       postalCode: "",
       country: "",
-      paymentMethod: ""
+      paymentType: ""
     };
   }
 
@@ -69,8 +70,8 @@ export class BillingAddressBuilder {
     return this;
   }
 
-  paymentMethod(paymentMethod: string): BillingAddressBuilder {
-    this.billingAddress.paymentMethod = paymentMethod;
+  paymentType(paymentType: string): BillingAddressBuilder {
+    this.billingAddress.paymentType = paymentType;
     return this;
   }
 

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   api: {
-    PRODUCTS: 'http://localhost:8080/ingenium/products'
+    PRODUCTS: 'http://localhost:8080/ingenium/products',
+    ORDER: 'http://localhost:8080/ingenium/orders'
   }
 };
 

@@ -36,10 +36,9 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/orders/{paymentType}")
-    ResponseEntity<OrderResponseDTO> createOrder(@RequestBody final OrderRequestDTO orderRequestDTO, @PathVariable final PaymentType paymentType,
-                                                 @CookieValue(value = "cartId", required = false) final String cartCookieId) {
-        final OrderResponseDTO orderResponseDTO = this.orderService.createOrder(orderRequestDTO, paymentType, cartCookieId);
+    @PostMapping("/orders")
+    ResponseEntity<OrderResponseDTO> createOrder(@RequestBody final OrderRequestDTO orderRequestDTO) {
+        final OrderResponseDTO orderResponseDTO = this.orderService.createOrder(orderRequestDTO);
         return ResponseEntity.ok(orderResponseDTO);
     }
 }

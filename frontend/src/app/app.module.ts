@@ -17,6 +17,8 @@ import {cartReducer} from "./stores/cart-store/reducer/cart.reducer";
 import {CheckoutPageComponent} from './components/pages/checkout-page/checkout-page.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {checkoutReducer} from "./stores/cart-store/reducer/checkout.reducer";
+import {OrderSummaryComponent} from "./components/pages/order-summary/order-summary.component";
+import { ConfirmationPageComponent } from './components/pages/confirmation-page/confirmation-page.component';
 
 export const hydrationMetaReducer = (
   reducer: ActionReducer<any>
@@ -48,6 +50,8 @@ export const hydrationMetaReducer = (
     ProductPageComponent,
     ProductItemComponent,
     CheckoutPageComponent,
+    OrderSummaryComponent,
+    ConfirmationPageComponent,
   ],
   imports: [
     AppRoutingModule,

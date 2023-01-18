@@ -7,5 +7,5 @@ import java.util.List;
 public interface OrderService {
     OrderView findOrderById(final Long orderId);
     List<OrderView> findAllOrders();
-    OrderResponseDTO createOrder(final OrderRequestDTO orderRequestDTO, final PaymentType paymentType, final String cartCookieId);
+    OrderResponseDTO createOrder(final OrderRequestDTO orderRequestDTO);
 }

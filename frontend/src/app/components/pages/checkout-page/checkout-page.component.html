@@ -131,15 +131,15 @@
           <h4 class="mb-4">Payment</h4>
           <div class="d-block my-3">
             <div class="form-check">
-              <input id="creditCard" value="creditCard" name="paymentMethod" type="radio" class="form-check-input" formControlName="paymentMethod" required>
+              <input id="creditCard" value="CREDIT_CARD" name="paymentType" type="radio" class="form-check-input" formControlName="paymentType" required>
               <label class="form-check-label" for="creditCard">Credit Card</label>
             </div>
             <div class="form-check">
-              <input id="paypal" value="paypal" name="paymentMethod" type="radio" class="form-check-input" formControlName="paymentMethod" required>
+              <input id="paypal" value="PAYPAL" name="paymentType" type="radio" class="form-check-input" formControlName="paymentType" required>
               <label class="form-check-label" for="paypal">Paypal</label>
             </div>
             <div class="form-check">
-              <input id="cash" value="cash" name="paymentMethod" type="radio" class="form-check-input" formControlName="paymentMethod" required>
+              <input id="cash" value="CASH" name="paymentType" type="radio" class="form-check-input" formControlName="paymentType" required>
               <label class="form-check-label" for="cash">Cash</label>
             </div>
           </div>
@@ -151,7 +151,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card card-body">
+      <div class="card card-body mb-4">
 
         <div class="row">
           <h4 class="mb-10 font-weight-semi-bold">Order Summary</h4>
@@ -185,6 +185,9 @@
           </div>
         </div>
         <hr>
+      </div>
+      <div class="d-grid gap-2">
+        <button class="btn btn-outline-success mb-4" [routerLink]="['/cart']">Back to the cart</button>
       </div>
     </div>
   </div>

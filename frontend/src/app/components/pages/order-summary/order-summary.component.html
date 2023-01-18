@@ -1,0 +1,98 @@
+<div class="container-md">
+  <div class="card card-body mb-3">
+    <div class="row">
+        <div class="col-md-6">
+          <h4 class="mb-3">Customer's date</h4>
+          <div class="row mb-1">
+            <label>First name: {{billingAddress.firstName}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Last name: {{billingAddress.lastName}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Email: {{billingAddress.email}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Phone number: {{billingAddress.phoneNumber}}</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h4 class="mb-3">Shipping address</h4>
+          <div class="row mb-1">
+            <label>Street name: {{billingAddress.streetName}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Street number: {{billingAddress.streetNumber}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Apartment number: {{billingAddress.apartmentNumber}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>City: {{billingAddress.city}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Postal code: {{billingAddress.postalCode}}</label>
+          </div>
+          <div class="row mb-1">
+            <label>Country: {{billingAddress.country}}</label>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="card card-body mb-3">
+    <div class="row mb-1">
+      <div class="col-md-6">
+        <h4 class="mb-3">Payment:</h4>
+      </div>
+      <div class="row mb-1">
+        <div *ngIf="billingAddress.paymentType === 'CREDIT_CARD'">
+          <label class="text-danger"><fa-icon [icon]="creditCard"></fa-icon> Credit Card</label>
+        </div>
+        <div *ngIf="billingAddress.paymentType === 'PAYPAL'">
+          <label class="text-primary"><fa-icon [icon]="paypal"></fa-icon> PayPal</label>
+        </div>
+        <div *ngIf="billingAddress.paymentType === 'CASH'">
+          <label class="text-success"><fa-icon [icon]="cash"></fa-icon> Cash</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-body mb-3" *ngFor="let cartEntry of cartEntries$ | async">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="card card-body" style="width: 9rem;">
+          <img src="https://i.imgur.com/Aj0L4Wa.jpg" width="100" height="85" alt="">
+        </div>
+      </div>
+      <div class="col-sm-4 text-center">
+        <h5 class="card-title mt-5">{{cartEntry.product.productName}}</h5>
+      </div>
+      <div class="col-sm-2 text-center">
+        <p class="mt-5">items: {{cartEntry.quantity}}</p>
+      </div>
+      <div class="col-sm-4 text-center">
+        <h4 class="mt-3">${{cartEntry.product.price.price * cartEntry.quantity}}</h4>
+        <p>per item: ${{cartEntry.product.price.price}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-body mb-3">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Total price:</h4>
+      </div>
+      <div class="col-md-6 text-end">
+        <h4>${{total$ | async}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="d-grid gap-2">
+      <button class="btn btn-outline-success mb-5" type="submit" (click)="createOrder()">Place Order</button>
+    </div>
+  </div>
+</div>

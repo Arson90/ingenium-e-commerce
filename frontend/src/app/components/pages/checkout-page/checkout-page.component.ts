@@ -34,7 +34,7 @@ export class CheckoutPageComponent implements OnInit {
   public onClick(data: any) {
     const billingAddress: BillingAddress = this.buildBillingAddress(data);
     this.store.dispatch(saveBillingAddress({billingAddress: billingAddress}));
-    return this.router.navigate(['/'])
+    return this.router.navigate(['order-summary'])
   }
 
   private initFormGroup() {
@@ -49,7 +49,7 @@ export class CheckoutPageComponent implements OnInit {
       city: new FormControl("",[Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       postalCode: new FormControl("",[Validators.required, Validators.pattern('[1-9]{1}[0-9]{1}\-[0-9]{3}')]),
       country: new FormControl("",[Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      paymentMethod: new FormControl("",[Validators.required])
+      paymentType: new FormControl("",[Validators.required])
     });
   }
   private setDefaultValuesForFormGroup() {
@@ -64,7 +64,7 @@ export class CheckoutPageComponent implements OnInit {
       this.formData.controls['city'].setValue(value.city);
       this.formData.controls['postalCode'].setValue(value.postalCode);
       this.formData.controls['country'].setValue(value.country);
-      this.formData.controls['paymentMethod'].setValue(value.paymentMethod);
+      this.formData.controls['paymentType'].setValue(value.paymentType);
     });
   }
 
@@ -80,7 +80,7 @@ export class CheckoutPageComponent implements OnInit {
       .city(data.city)
       .postalCode(data.postalCode)
       .country(data.country)
-      .paymentMethod(data.paymentMethod)
+      .paymentType(data.paymentType)
       .build();
   }
 
@@ -94,5 +94,5 @@ export class CheckoutPageComponent implements OnInit {
   get city() { return this.formData.get('city'); }
   get postalCode() { return this.formData.get('postalCode'); }
   get country() { return this.formData.get('country'); }
-  get paymentMethod() { return this.formData.get('paymentMethod'); }
+  get paymentType() { return this.formData.get('paymentType'); }
 }

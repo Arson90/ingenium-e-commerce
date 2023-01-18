@@ -2,29 +2,29 @@ package com.ingenium.ingeniumecommerce.order;
 
 import com.ingenium.ingeniumecommerce.address.Address;
 import com.ingenium.ingeniumecommerce.address.AddressFactoryUtility;
-import com.ingenium.ingeniumecommerce.cart.Cart;
-import com.ingenium.ingeniumecommerce.cart.CartCommandRepository;
-import com.ingenium.ingeniumecommerce.cart.CartNotFoundException;
-import com.ingenium.ingeniumecommerce.cartEntry.CartEntry;
+import com.ingenium.ingeniumecommerce.cartEntry.CartEntryRequestDTO;
 import com.ingenium.ingeniumecommerce.customer.Customer;
 import com.ingenium.ingeniumecommerce.customer.CustomerFactoryUtils;
-import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
+import com.ingenium.ingeniumecommerce.product.Product;
+import com.ingenium.ingeniumecommerce.product.ProductCommandRepository;
+import com.ingenium.ingeniumecommerce.product.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService{
     private final OrderCommandRepository orderCommandRepository;
     private final OrderQueryRepository orderQueryRepository;
-    private final CartCommandRepository cartCommandRepository;
+    private final ProductCommandRepository productCommandRepository;
 
-    public OrderServiceImpl(OrderCommandRepository orderCommandRepository, OrderQueryRepository orderQueryRepository, CartCommandRepository cartCommandRepository) {
+    public OrderServiceImpl(OrderCommandRepository orderCommandRepository, OrderQueryRepository orderQueryRepository, ProductCommandRepository productCommandRepository) {
         this.orderCommandRepository = orderCommandRepository;
         this.orderQueryRepository = orderQueryRepository;
-        this.cartCommandRepository = cartCommandRepository;
+        this.productCommandRepository = productCommandRepository;
     }
 
     @Override
@@ -40,23 +40,28 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     @Transactional
-    public OrderResponseDTO createOrder(final OrderRequestDTO orderRequestDTO, final PaymentType paymentType, final String cartCookieId) {
+    public OrderResponseDTO createOrder(final OrderRequestDTO orderRequestDTO) {
+        final OrderRequestWrapper orderRequestWrapper = prepareData(orderRequestDTO);
+        Order order = new Order();
+        order.addCustomerToOrder(orderRequestWrapper.getCustomer());
+        order.addCartEntriesToOrderEntries(orderRequestWrapper.getCartEntries());
+        order.addPaymentTypeToOrder(orderRequestDTO.getPaymentType());
+        order.calculateTotalPrice();
+        order = this.orderCommandRepository.save(order);
+        return OrderFactoryUtils.convertOrderToOrderResponseDto(order);
+    }
+
+    private OrderRequestWrapper prepareData(final OrderRequestDTO orderRequestDTO) {
         final Address address = AddressFactoryUtility
                 .convertAddressRequestDtoToAddress(orderRequestDTO.getAddressRequestDTO());
         final Customer customer = CustomerFactoryUtils
                 .convertCustomerRequestDtoToCustomer(orderRequestDTO.getCustomerRequestDTO(), address);
-        final Long cartId = Long.valueOf(cartCookieId);
-        final Set<CartEntry> cartEntries = this.cartCommandRepository.findById(cartId)
-                .map(Cart::getCartEntries)
-                .orElseThrow(() -> CartNotFoundException.createForCartId(cartId));
-
-        Order order = new Order();
-        order.addCartEntriesToOrderEntries(cartEntries);
-        order.addCustomerToOrder(customer);
-        order.addPaymentTypeToOrder(paymentType);
-        order.calculateTotalPrice();
-        order = this.orderCommandRepository.save(order);
-
-        return OrderFactoryUtils.convertOrderToOrderResponseDto(order);
+        final Map<Product, Integer> cartEntries = orderRequestDTO.getCartEntriesRequestDTO().stream()
+                .collect(Collectors.toMap(cartEntryRequestDTO -> productCommandRepository.findById(cartEntryRequestDTO.getProductId())
+                                .orElseThrow(() -> ProductNotFoundException.createForProductId(cartEntryRequestDTO.getProductId())),
+                        CartEntryRequestDTO::getQuantity, (oldValue, newValue) -> oldValue));
+        return OrderRequestWrapper.builder()
+                .customer(customer)
+                .cartEntries(cartEntries).build();
     }
 }

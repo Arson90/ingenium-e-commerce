@@ -1,6 +1,6 @@
 import {BillingAddress} from "../../../types/BillingAddress";
 import {createReducer, on} from "@ngrx/store";
-import {saveBillingAddress} from "../actions/checkout.actions";
+import {clearBillingAddress, saveBillingAddress} from "../actions/checkout.actions";
 import {BillingAddressBuilder} from "../../../types/BillingAddressBuilder";
 
 export interface CheckoutState {
@@ -16,6 +16,12 @@ export const checkoutReducer = createReducer(
     return {
       ...state,
       billingAddress: payload.billingAddress
+    }
+  }),
+  on(clearBillingAddress, (state) => {
+    return {
+      ...state,
+      billingAddress: new BillingAddressBuilder().build()
     }
   })
 );

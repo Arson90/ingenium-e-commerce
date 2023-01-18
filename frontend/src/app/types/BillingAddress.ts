@@ -1,3 +1,5 @@
+import {PaymentType} from "./PaymentType";
+
 export interface BillingAddress {
   firstName: string;
   lastName: string;
@@ -9,5 +11,5 @@ export interface BillingAddress {
   city: string;
   postalCode: string;
   country: string;
-  paymentMethod: string;
+  paymentType: string;
 }

@@ -16,3 +16,7 @@ export const changeQuantity = createAction(
   '[CartPageComponent] Change quantity of product',
   props<{quantity: number, product: ProductResponseDTO}>()
 );
+
+export const clearCartData = createAction(
+  '[ConfirmationComponent] Clear cart data'
+);

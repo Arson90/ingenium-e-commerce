@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset arek:6 runOnChange:true
+-- changeset arek:4 runOnChange:true
 CREATE TABLE customers (
   id BIGINT NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(128) NOT NULL,

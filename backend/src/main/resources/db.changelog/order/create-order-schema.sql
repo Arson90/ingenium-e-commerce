@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset arek:8 runOnChange:true
+-- changeset arek:5 runOnChange:true
 CREATE TABLE orders (
     id BIGINT NOT NULL AUTO_INCREMENT,
     customer_id BIGINT NOT NULL,

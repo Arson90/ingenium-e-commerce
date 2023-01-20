@@ -1,15 +1,17 @@
-package com.ingenium.ingeniumecommerce.security.basicAuth;
+package com.ingenium.ingeniumecommerce.security.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -18,8 +20,9 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration{
-
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -27,18 +30,22 @@ public class SecurityConfiguration{
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/ingenium/**").permitAll()
-//                .antMatchers("/ingenium/products").permitAll()
-                .antMatchers(HttpMethod.POST,"/ingenium/register").permitAll()
-//                .antMatchers("/ingenium/carts/**").permitAll()
-//                .anyRequest().authenticated()
-                .and().formLogin();
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/ingenium", "/ingenium/authenticate", "/ingenium/register").permitAll()
+                .antMatchers("/ingenium/products").hasRole("USER")
+                .antMatchers("/ingenium/users").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

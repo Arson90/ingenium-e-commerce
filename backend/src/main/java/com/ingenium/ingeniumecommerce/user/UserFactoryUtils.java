@@ -10,7 +10,7 @@ public class UserFactoryUtils {
                 .username(userRequestDTO.getUsername())
                 .password(encodedPassword)
                 .customer(customer)
-                .role("USER")
+                .role("ROLE_USER")
                 .build();
     }
 }

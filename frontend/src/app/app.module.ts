@@ -19,6 +19,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {checkoutReducer} from "./stores/cart-store/reducer/checkout.reducer";
 import {OrderSummaryComponent} from "./components/pages/order-summary/order-summary.component";
 import { ConfirmationPageComponent } from './components/pages/confirmation-page/confirmation-page.component';
+import { LoginPageComponent } from './components/pages/login-page/login-page.component';
+import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 
 export const hydrationMetaReducer = (
   reducer: ActionReducer<any>
@@ -52,6 +54,8 @@ export const hydrationMetaReducer = (
     CheckoutPageComponent,
     OrderSummaryComponent,
     ConfirmationPageComponent,
+    LoginPageComponent,
+    RegisterPageComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -62,7 +66,8 @@ export const hydrationMetaReducer = (
     StoreDevtoolsModule.instrument({
       maxAge: 15
     }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

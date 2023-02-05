@@ -15,16 +15,27 @@
         <li class="nav-item"><a class="nav-link" href="/user">My Account</a></li>
       </ul>
       <app-cart-items-counter></app-cart-items-counter>
-      <form class="d-flex">
-        <button class="btn btn-outline-dark" type="submit">
-          Sign in
-        </button>
-      </form>
-      <form class="d-flex">
-        <button class="btn btn-outline-dark" [routerLink]="['/register']">
-          Sign up
-        </button>
-      </form>
+      <ng-container *ngIf="isLogged$ | async; else logoutTemplate">
+        <div >
+          <form class="d-flex">
+            <button class="btn btn-outline-dark" [routerLink]="['/']" (click)="logout()">
+              Logout
+            </button>
+          </form>
+        </div>
+      </ng-container>
+      <ng-template #logoutTemplate>
+        <form class="d-flex">
+          <button class="btn btn-outline-dark" [routerLink]="['/login']">
+            Sign in
+          </button>
+        </form>
+        <form class="d-flex">
+          <button class="btn btn-outline-dark" [routerLink]="['/register']">
+            Sign up
+          </button>
+        </form>
+      </ng-template>
     </div>
   </div>
 </nav>

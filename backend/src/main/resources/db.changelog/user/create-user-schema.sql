@@ -1,11 +1,11 @@
 -- liquibase formatted sql
--- changeset arek:9 runOnChange:true
+-- changeset arek:7 runOnChange:true
 CREATE TABLE users (
     id BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(128) NOT NULL,
     `password` VARCHAR(128) NOT NULL,
     `role` VARCHAR(128) NOT NULL,
-    customer_id BIGINT NOT NULL,
+    customer_id BIGINT,
     PRIMARY KEY (id)
 );
 

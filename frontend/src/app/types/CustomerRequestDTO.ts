@@ -1,4 +1,4 @@
-export interface CustomerRequestDTO {
+export class CustomerRequestDTO {
   firstName: string;
   lastName: string;
   email: string;

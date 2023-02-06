@@ -15,6 +15,9 @@ public class UserCustomDetails implements UserDetails, CredentialsContainer {
         this.user = user;
     }
 
+    public Long getUserId() {
+        return user.getId();
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
@@ -28,7 +31,7 @@ public class UserCustomDetails implements UserDetails, CredentialsContainer {
 
     @Override
     public String getUsername() {
-        return user.getPassword();
+        return user.getUsername();
     }
 
     @Override

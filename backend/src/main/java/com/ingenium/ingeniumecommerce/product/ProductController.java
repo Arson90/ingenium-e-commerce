@@ -1,5 +1,6 @@
 package com.ingenium.ingeniumecommerce.product;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ingenium")
+@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-
-    ProductController(ProductServiceImpl productService) {
-        this.productService = productService;
-    }
 
     @GetMapping("/products/{productId}")
     ResponseEntity<ProductView> getProductById(@PathVariable final Long productId) {

@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   api: {
     PRODUCTS: 'http://localhost:8080/ingenium/products',
-    ORDER: 'http://localhost:8080/ingenium/orders'
+    ORDER: 'http://localhost:8080/ingenium/orders',
+    AUTHENTICATE: 'http://localhost:8080/ingenium/authenticate',
+    REGISTER: 'http://localhost:8080/ingenium/register'
   }
 };
 

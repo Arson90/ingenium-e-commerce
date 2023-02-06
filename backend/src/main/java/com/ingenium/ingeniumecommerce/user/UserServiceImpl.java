@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService{
                 .convertCustomerRequestDtoToCustomer(userRequestDTO.getCustomerRequestDTO(), new Address());
         final String encodedPassword = getEncodedPassword(userRequestDTO.getPassword());
         final User user = UserFactoryUtils.createUser(userRequestDTO, encodedPassword, customer);
-        this.userQueryRepository.save(user);
+        this.userCommandRepository.save(user);
     }
 
     @Override

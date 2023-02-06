@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset arek:5 runOnChange:true
+-- changeset arek:3 runOnChange:true
 CREATE TABLE addresses (
   id BIGINT NOT NULL AUTO_INCREMENT,
   street_name VARCHAR(128),

@@ -7,7 +7,7 @@
             <fa-icon [icon]="account" class="fa-4x"></fa-icon>
           </div>
         </div>
-        <form [formGroup]="formData" (ngSubmit)="onClick(formData.value)" >
+        <form [formGroup]="formData" (ngSubmit)="register(formData.value)" >
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="username" class="form-label">Username</label>

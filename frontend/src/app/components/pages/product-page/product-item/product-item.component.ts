@@ -26,13 +26,13 @@ export class ProductItemComponent implements OnInit {
     this.getProductById(this.id);
   }
 
-  public getProductById(productId: number): void {
+  getProductById(productId: number): void {
     this.productService.getProductById(productId).subscribe(product => {
       this.product = product;
     })
   }
 
-  public addProduct(product: ProductResponseDTO, quantity: string) {
+  addProduct(product: ProductResponseDTO, quantity: string) {
     const cartEntry = new CartEntry(product,parseInt(quantity));
     this.store.dispatch(addProduct({cartEntry: cartEntry}));
   }

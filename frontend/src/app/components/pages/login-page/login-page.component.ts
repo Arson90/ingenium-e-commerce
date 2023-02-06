@@ -13,24 +13,17 @@ import {Router} from "@angular/router";
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-  errorMessage: string;
   account = faUser;
+  errorMessage: string;
   formData: FormGroup;
   authenticationRequest: AuthenticationRequest = {
     username: "",
     password: ""
   };
-  constructor(private authService: AuthService, private store: Store, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private store: Store) { }
 
   ngOnInit(): void {
     this.initFormGroup()
-  }
-
-  private initFormGroup() {
-    this.formData = new FormGroup({
-      username: new FormControl("", [Validators.required, Validators.pattern('[a-z A-Z 0-9]*')]),
-      password: new FormControl("", [Validators.required, Validators.pattern('[a-z A-Z 0-9]{4,16}')]),
-    });
   }
 
   tryToLogin(data: any) {
@@ -38,6 +31,7 @@ export class LoginPageComponent implements OnInit {
     this.authenticationRequest.password = data.password;
     this.authService.login(this.authenticationRequest).subscribe(
       response => {
+        this.authService.addUserIdToLocalStorage(String(response.userId))
         this.authService.addTokenToLocalStorage(response.token)
         this.store.dispatch(isLogged({isLogged: true}))
         this.router.navigate([''])
@@ -50,4 +44,11 @@ export class LoginPageComponent implements OnInit {
 
   get username() { return this.formData.get('username'); }
   get password() { return this.formData.get('password'); }
+
+  private initFormGroup() {
+    this.formData = new FormGroup({
+      username: new FormControl("", [Validators.required, Validators.pattern('[a-z A-Z 0-9]*')]),
+      password: new FormControl("", [Validators.required, Validators.pattern('[a-z A-Z 0-9]{4,16}')]),
+    });
+  }
 }

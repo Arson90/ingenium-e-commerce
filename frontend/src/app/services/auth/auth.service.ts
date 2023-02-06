@@ -13,26 +13,26 @@ export class AuthService {
   private apiUrlRegister = environment.api.REGISTER;
   constructor(private http: HttpClient) { }
 
-  register(userRequestDTO: UserRequestDTO) {
-    this.registerUser(userRequestDTO);
-  }
   login(request: AuthenticationRequest) {
-    return this.http.post<AuthenticationResponse>(`${this.apiUrlAuth}`, request)
+    return this.http.post<AuthenticationResponse>(`${this.apiUrlAuth}`, request);
   }
 
-  private registerUser(userRequestDTO: UserRequestDTO) {
-    console.log(userRequestDTO)
-    return this.http.post<void>(`${this.apiUrlRegister}`, userRequestDTO).subscribe(
-      res => {console.log("Your account was created, Thanks!")},
-      error => {console.log("ERROR", error.status)}
-    );
+  register(userRequestDTO: UserRequestDTO) {
+    return this.http.post<void>(`${this.apiUrlRegister}`, userRequestDTO);
   }
 
+  addUserIdToLocalStorage(userId: string) {
+    localStorage.setItem('user_id', userId);
+  }
   addTokenToLocalStorage(token: string) {
     localStorage.setItem('id_token', token);
   }
 
   removeTokenFromLocalStorage() {
     localStorage.removeItem('id_token');
+  }
+
+  removeUserIdFromLocalStorage() {
+    localStorage.removeItem('user_id');
   }
 }

@@ -5,7 +5,7 @@ public interface AddressView {
     String getStreetName();
     String getStreetNumber();
     String getApartmentNumber();
-    String getTown();
+    String getCity();
     String getPostalCode();
     String getCountry();
 }

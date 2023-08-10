@@ -1,7 +1,8 @@
 package com.ingenium.ingeniumecommerce.customer;
 
+import com.ingenium.ingeniumecommerce.account.data.CustomerData;
 import com.ingenium.ingeniumecommerce.address.Address;
-import com.ingenium.ingeniumecommerce.address.AddressFactoryUtility;
+import com.ingenium.ingeniumecommerce.address.AddressFactoryUtils;
 
 public class CustomerFactoryUtils {
     private CustomerFactoryUtils() {
@@ -24,8 +25,16 @@ public class CustomerFactoryUtils {
                 .lastName(customer.getLastName())
                 .email(customer.getEmail())
                 .phoneNumber(customer.getPhoneNumber())
-                .addressResponseDTO(AddressFactoryUtility
-                        .convertAddressToAddressResponseDTO(customer.getAddress()))
+                .addressResponseDTO(AddressFactoryUtils.convertAddressToAddressResponseDTO(customer.getAddress()))
+                .build();
+    }
+
+    public static CustomerData convertCustomerToCustomerData(final Customer customer) {
+        return CustomerData.builder()
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .email(customer.getEmail())
+                .phoneNumber(customer.getPhoneNumber())
                 .build();
     }
 }

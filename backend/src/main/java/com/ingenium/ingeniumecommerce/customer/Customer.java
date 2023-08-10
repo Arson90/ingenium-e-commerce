@@ -1,6 +1,8 @@
 package com.ingenium.ingeniumecommerce.customer;
 
 import com.ingenium.ingeniumecommerce.address.Address;
+import com.ingenium.ingeniumecommerce.address.AddressFactoryUtils;
+import com.ingenium.ingeniumecommerce.address.AddressRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,4 +32,21 @@ public class Customer {
     private String phoneNumber;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    public Customer updateCustomer(final CustomerRequestDTO customerRequestDTO) {
+        this.firstName = customerRequestDTO.getFirstName();
+        this.lastName = customerRequestDTO.getLastName();
+        this.email = customerRequestDTO.getEmail();
+        this.phoneNumber = customerRequestDTO.getPhoneNumber();
+        return this;
+    }
+
+    public Address updateAddress(final AddressRequestDTO addressRequestDTO) {
+        this.address = AddressFactoryUtils.convertAddressRequestDtoToAddress(addressRequestDTO);
+        return this.address;
+    }
+
+    public void addAddress(final Address address) {
+        this.address = address;
+    }
 }

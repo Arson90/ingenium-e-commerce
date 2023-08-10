@@ -5,7 +5,7 @@ CREATE TABLE addresses (
   street_name VARCHAR(128),
   street_number VARCHAR(10),
   apartment_number VARCHAR(10),
-  town VARCHAR(50),
+  city VARCHAR(50),
   postal_code VARCHAR(20),
   country VARCHAR(50),
   PRIMARY KEY (id)

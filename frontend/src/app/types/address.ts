@@ -8,6 +8,15 @@ export interface Address {
     country: string;
 }
 
+export interface AddressData {
+    streetName: string;
+    streetNumber: string;
+    apartmentNumber: string;
+    city: string;
+    postalCode: string;
+    country: string;
+}
+
 export interface ShippingAddress {
     firstName: string;
     lastName: string;

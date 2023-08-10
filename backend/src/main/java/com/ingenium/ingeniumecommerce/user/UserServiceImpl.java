@@ -1,24 +1,19 @@
 package com.ingenium.ingeniumecommerce.user;
 
-import com.ingenium.ingeniumecommerce.address.Address;
-import com.ingenium.ingeniumecommerce.customer.Customer;
-import com.ingenium.ingeniumecommerce.customer.CustomerFactoryUtils;
+import com.ingenium.ingeniumecommerce.security.auth.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserCommandRepository userCommandRepository;
     private final UserQueryRepository userQueryRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserCommandRepository userCommandRepository, UserQueryRepository userQueryRepository, PasswordEncoder passwordEncoder) {
-        this.userCommandRepository = userCommandRepository;
-        this.userQueryRepository = userQueryRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final AuthenticationService authenticationService;
 
     @Override
     public UserView findUserById(final Long userId) {
@@ -32,20 +27,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void createUser(final UserRequestDTO userRequestDTO) {
-        final Customer customer = CustomerFactoryUtils
-                .convertCustomerRequestDtoToCustomer(userRequestDTO.getCustomerRequestDTO(), new Address());
-        final String encodedPassword = getEncodedPassword(userRequestDTO.getPassword());
-        final User user = UserFactoryUtils.createUser(userRequestDTO, encodedPassword, customer);
-        this.userCommandRepository.save(user);
+    public User findMyUser() {
+        final String authenticationName = this.authenticationService.getAuthenticationName();
+        return this.userQueryRepository.findByUsername(authenticationName)
+                .orElseThrow(() -> UserNotFoundException.createForUserName(authenticationName));
     }
 
+
     @Override
-    public Long changePassword(final Long userId, final String password) {
-        return this.userCommandRepository.findById(userId)
+    public Long changePassword(final String password) {
+        final String authenticationName = this.authenticationService.getAuthenticationName();
+        return this.userQueryRepository.findByUsername(authenticationName)
                 .map(user -> user.changePassword(getEncodedPassword(password)))
                 .map(User::getId)
-                .orElseThrow(() -> UserNotFoundException.createForUserId(userId));
+                .orElseThrow(() -> UserNotFoundException.createForUserName(authenticationName));
     }
 
     @Override

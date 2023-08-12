@@ -5,10 +5,12 @@
 export const environment = {
   production: false,
   api: {
-    PRODUCTS: 'http://localhost:8080/ingenium/products',
-    ORDER: 'http://localhost:8080/ingenium/orders',
     AUTHENTICATE: 'http://localhost:8080/ingenium/authenticate',
-    REGISTER: 'http://localhost:8080/ingenium/register'
+    ORDER: 'http://localhost:8080/ingenium/orders',
+    PRODUCTS: 'http://localhost:8080/ingenium/products',
+    REGISTER: 'http://localhost:8080/ingenium/register',
+    USER: 'http://localhost:8080/ingenium/users',
+    ACCOUNT: 'http://localhost:8080/ingenium/account'
   }
 };
 

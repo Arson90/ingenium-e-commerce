@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  serverUrl: 'http://localhost:8080/ingenium',
   api: {
     AUTHENTICATE: 'http://localhost:8080/ingenium/authenticate',
     ORDER: 'http://localhost:8080/ingenium/orders',

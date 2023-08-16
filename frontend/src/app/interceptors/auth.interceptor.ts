@@ -6,17 +6,19 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from "../../environments/environment";
+import {AuthService} from "../services/auth/auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
-  constructor() {}
+  isLoggedIn$: Observable<boolean>;
+  constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const idToken = localStorage.getItem("id_token");
-    if (idToken) {
+    const isToServer = request.url.startsWith(environment.serverUrl);
+    if (this.isLoggedIn$ && isToServer) {
       request = request.clone({
-        setHeaders: { Authorization: `Bearer ${idToken}` }
+        setHeaders: { Authorization: `Bearer ${this.authService.jwt}` }
       });
     }
     return next.handle(request);

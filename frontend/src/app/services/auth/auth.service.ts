@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {AuthenticationResponse} from "../../types/AuthenticationResponse";
 import { Observable, tap } from 'rxjs';
-import {AuthenticationRequest} from "../../types/AuthenticationRequest";
 import {UserRequestDTO} from "../../types/UserRequestDTO";
+import {AuthenticationRequest, AuthenticationResponse} from "../../types/auth";
 
 @Injectable({
   providedIn: 'root'

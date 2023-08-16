@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {ActionReducer, INIT, StoreModule, UPDATE} from "@ngrx/store";
+import {StoreModule} from "@ngrx/store";
 import {AppRoutingModule} from './app-routing.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -24,26 +24,6 @@ import { RegisterPageComponent } from './components/pages/register-page/register
 import {authReducer} from "./stores/cart-store/reducer/auth.reducer";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
 
-export const hydrationMetaReducer = (
-  reducer: ActionReducer<any>
-): ActionReducer<any> => {
-  return (state, action) => {
-    if (action.type === INIT || action.type === UPDATE) {
-      const storageValue = localStorage.getItem("state");
-      if (storageValue) {
-        try {
-          return JSON.parse(storageValue);
-        } catch {
-          localStorage.removeItem("state");
-        }
-      }
-    }
-    const nextState = reducer(state, action);
-    localStorage.setItem("state", JSON.stringify(nextState));
-    return nextState;
-  };
-};
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +44,7 @@ export const hydrationMetaReducer = (
     BrowserModule,
     HttpClientModule,
     FontAwesomeModule,
-    StoreModule.forRoot({cart: cartReducer, billingAddress: checkoutReducer, authState: authReducer}, {metaReducers: [hydrationMetaReducer]}),
+    StoreModule.forRoot({cart: cartReducer, billingAddress: checkoutReducer, authState: authReducer}),
     StoreDevtoolsModule.instrument({
       maxAge: 15
     }),

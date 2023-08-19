@@ -1,6 +1,7 @@
 package com.ingenium.ingeniumecommerce.account.controller;
 
 import com.ingenium.ingeniumecommerce.account.data.AccountData;
+import com.ingenium.ingeniumecommerce.account.data.OrderData;
 import com.ingenium.ingeniumecommerce.account.facade.AccountFacade;
 import com.ingenium.ingeniumecommerce.address.AddressRequestDTO;
 import com.ingenium.ingeniumecommerce.constant.RestApiUrl;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class AccountController {
@@ -25,6 +27,15 @@ public class AccountController {
     public ResponseEntity<AccountData> getAccountData() {
         final AccountData accountData = this.accountFacade.getAccountData();
         return ResponseEntity.ok(accountData);
+    }
+
+    @GetMapping(RestApiUrl.Page.MY_ACCOUNT + "/my-orders")
+    ResponseEntity<List<OrderData>> getMyOrders() {
+        final List<OrderData> orders = this.accountFacade.getMyOrders();
+        if (!orders.isEmpty()) {
+            return ResponseEntity.ok(orders);
+        }
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping(RestApiUrl.Page.MY_ACCOUNT + "/update-customer")

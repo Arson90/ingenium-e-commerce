@@ -1,0 +1,54 @@
+<div class="row">
+  <app-my-profil class="col-lg-4"></app-my-profil>
+  <div class="col-lg-8">
+    <div class="card mb-2">
+      <div class="card-body">
+        <form [formGroup]="passwordForm">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="newPassword" class="form-label">New password</label>
+            </div>
+            <div class="col-sm-9">
+              <input id="newPassword" type="text" class="form-control" formControlName="newPassword">
+              <div *ngIf="newPassword?.invalid && (newPassword?.dirty || newPassword?.touched)" class="alert alert-danger">
+                <div *ngIf="newPassword?.errors?.['required']">
+                  Password is required.
+                </div>
+                <div *ngIf="newPassword?.errors?.['pattern']">
+                  Provide combination of letters and numbers.
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="repeatedPassword" class="form-label">Repeat new password</label>
+            </div>
+            <div class="col-sm-9">
+              <input id="repeatedPassword" type="text" class="form-control" formControlName="repeatedPassword" required>
+              <div *ngIf="repeatedPassword?.invalid && (repeatedPassword?.dirty || repeatedPassword?.touched)" class="alert alert-danger">
+                <div *ngIf="repeatedPassword?.errors?.['required']">
+                  Password is required or not match.
+                </div>
+                <div *ngIf="repeatedPassword?.errors?.['pattern']">
+                  Provide combination of letters and numbers.
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="d-grid gap-2 d-md-block mt-1">
+              <button type="button" class="btn btn-outline-primary" [hidden]="!isInputDisabled"
+                      (click)="editForm()">Edit</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [disabled]="!passwordForm.valid" [hidden]="isInputDisabled" (click)="savePassword()">Save</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [hidden]="isInputDisabled"
+                      (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="row">
+  <app-my-profile class="col-lg-4"></app-my-profile>
+  <div class="col-lg-8">
+    <div class="card mb-2">
+      <div class="card-body">
+        <form [formGroup]="addressForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="streetName" class="form-label">Street Name</label>
+              <input type="text" class="form-control" id="streetName" formControlName="streetName" required>
+              <div *ngIf="streetName?.invalid && (streetName?.dirty || streetName?.touched)" class="alert alert-danger">
+                <div *ngIf="streetName?.errors?.['required']">
+                  Street name is required.
+                </div>
+                <div *ngIf="streetName?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="streetNumber" class="form-label">Street Number</label>
+              <input type="text" class="form-control" id="streetNumber" formControlName="streetNumber" required>
+              <div *ngIf="streetNumber?.invalid && (streetNumber?.dirty || streetNumber?.touched)" class="alert alert-danger">
+                <div *ngIf="streetNumber?.errors?.['required']">
+                  Street number is required.
+                </div>
+                <div *ngIf="streetNumber?.errors?.['pattern']">
+                  Min one number and only numbers are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="apartmentNumber" class="form-label">Apartment Number</label>
+              <input type="text" class="form-control" id="apartmentNumber" formControlName="apartmentNumber">
+              <div *ngIf="apartmentNumber?.invalid && (apartmentNumber?.dirty || apartmentNumber?.touched)" class="alert alert-danger">
+                <div *ngIf="apartmentNumber?.errors?.['pattern']">
+                  Min one number and only numbers are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="city" class="form-label">City</label>
+              <input type="text" class="form-control" id="city" formControlName="city" required>
+              <div *ngIf="city?.invalid && (city?.dirty || city?.touched)" class="alert alert-danger">
+                <div *ngIf="city?.errors?.['required']">
+                  City is required.
+                </div>
+                <div *ngIf="city?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="postalCode" class="form-label">Postal Code</label>
+              <input type="text" class="form-control" id="postalCode" formControlName="postalCode" placeholder="12-345" required>
+              <div *ngIf="postalCode?.invalid && (postalCode?.dirty || postalCode?.touched)" class="alert alert-danger">
+                <div *ngIf="postalCode?.errors?.['required']">
+                  Postal code is required.
+                </div>
+                <div *ngIf="postalCode?.errors?.['pattern']">
+                  Please enter valid postal code, 12-345
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" class="form-control" id="country" formControlName="country" required>
+              <div *ngIf="country?.invalid && (country?.dirty || country?.touched)" class="alert alert-danger">
+                <div *ngIf="country?.errors?.['required']">
+                  Country is required.
+                </div>
+                <div *ngIf="country?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="d-grid gap-2 d-md-block mt-1">
+              <div *ngIf="!addressForm.valid">
+                <p class="text-danger">Data are invalid, please check.</p>
+              </div>
+              <button type="button" class="btn btn-outline-primary" [hidden]="!isInputDisabled"
+                      (click)="editForm()">Edit</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [disabled]="!addressForm.valid" [hidden]="isInputDisabled" (click)="saveAddress()">Save</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [hidden]="isInputDisabled"
+                      (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

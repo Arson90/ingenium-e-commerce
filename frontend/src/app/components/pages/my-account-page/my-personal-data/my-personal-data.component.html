@@ -1,0 +1,94 @@
+<div class="row">
+  <app-my-profil class="col-lg-4"></app-my-profil>
+  <div class="col-lg-8">
+    <div class="card mb-2">
+      <div class="card-body">
+        <form [formGroup]="detailsForm">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="firstName" class="form-label">First Name</label>
+            </div>
+            <div class="col-sm-9">
+              <input id="firstName" type="text" class="form-control" formControlName="firstName">
+              <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="alert alert-danger">
+                <div *ngIf="firstName?.errors?.['required']">
+                  First name is required.
+                </div>
+                <div *ngIf="firstName?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="lastName" class="form-label">Last Name</label>
+            </div>
+            <div class="col-sm-9">
+              <input id="lastName" type="text" class="form-control" formControlName="lastName" required>
+              <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="alert alert-danger">
+                <div *ngIf="lastName?.errors?.['required']">
+                  Last name is required.
+                </div>
+                <div *ngIf="lastName?.errors?.['pattern']">
+                  Only letters are required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="email" class="form-label">Email</label>
+            </div>
+            <div class="col-sm-9">
+              <input id="email" type="email" class="form-control" formControlName="email" placeholder="you@example.com"
+                     required>
+              <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="alert alert-danger">
+                <div *ngIf="email?.errors?.['required']">
+                  Email is required.
+                </div>
+                <div *ngIf="email?.errors?.['email']">
+                  Please enter valid email, you@example.com
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="phoneNumber" class="form-label">Phone number</label>
+            </div>
+            <div class="col-sm-9">
+              <input id="phoneNumber" type="text" class="form-control" formControlName="phoneNumber"
+                     placeholder="500600700" required>
+              <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)"
+                   class="alert alert-danger">
+                <div *ngIf="phoneNumber?.errors?.['required']">
+                  Phone number is required.
+                </div>
+                <div *ngIf="phoneNumber?.errors?.['pattern']">
+                  Please enter valid phone number, 123456789
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="d-grid gap-2 d-md-block mt-1">
+              <div *ngIf="!detailsForm.valid">
+                <p class="text-danger">Data are invalid, please check.</p>
+              </div>
+              <button type="button" class="btn btn-outline-primary" [hidden]="!isInputDisabled"
+                      (click)="editForm()">Edit</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [disabled]="!detailsForm.valid" [hidden]="isInputDisabled" (click)="saveDetails()">Save</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [hidden]="isInputDisabled"
+                      (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 package com.ingenium.ingeniumecommerce.orderEntry;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ingenium.ingeniumecommerce.money.Money;
 import com.ingenium.ingeniumecommerce.order.Order;
 import com.ingenium.ingeniumecommerce.product.Product;

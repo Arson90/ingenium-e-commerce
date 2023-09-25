@@ -21,8 +21,13 @@ import {OrderSummaryComponent} from "./components/pages/order-summary/order-summ
 import { ConfirmationPageComponent } from './components/pages/confirmation-page/confirmation-page.component';
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
-import {authReducer} from "./stores/cart-store/reducer/auth.reducer";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { MyAccountPageComponent } from './components/pages/my-account-page/my-account-page.component';
+import { ChangePasswordComponent } from './components/pages/my-account-page/change-password/change-password.component';
+import { MyAddressComponent } from './components/pages/my-account-page/my-address/my-address.component';
+import { MyOrdersComponent } from './components/pages/my-account-page/my-orders/my-orders.component';
+import { MyProfileComponent } from './components/pages/my-account-page/my-profile/my-profile.component';
+import { MyPersonalDataComponent } from './components/pages/my-account-page/my-personal-data/my-personal-data.component';
 
 @NgModule({
   declarations: [
@@ -38,13 +43,19 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     ConfirmationPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
+    MyAccountPageComponent,
+    ChangePasswordComponent,
+    MyAddressComponent,
+    MyOrdersComponent,
+    MyProfileComponent,
+    MyPersonalDataComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     FontAwesomeModule,
-    StoreModule.forRoot({cart: cartReducer, billingAddress: checkoutReducer, authState: authReducer}),
+    StoreModule.forRoot({cart: cartReducer, billingAddress: checkoutReducer}),
     StoreDevtoolsModule.instrument({
       maxAge: 15
     }),

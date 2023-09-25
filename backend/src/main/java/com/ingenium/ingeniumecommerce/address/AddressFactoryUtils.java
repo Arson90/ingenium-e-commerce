@@ -17,19 +17,6 @@ public final class AddressFactoryUtils {
                 .build();
     }
 
-    public static AddressResponseDTO convertAddressToAddressResponseDTO(final Address address) {
-        return AddressResponseDTO.builder()
-                .id(address.getId())
-                .streetName(address.getStreetName())
-                .streetNumber(address.getStreetNumber())
-                .apartmentNumber(address.getApartmentNumber())
-                .city(address.getCity())
-                .postalCode(address.getPostalCode())
-                .country(address.getCountry())
-                .build();
-    }
-
-
     public static AddressData convertAddressToAddressData(final Address address) {
         return AddressData.builder()
                 .streetName(address.getStreetName())

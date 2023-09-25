@@ -1,4 +1,4 @@
-package com.ingenium.ingeniumecommerce.validation;
+package com.ingenium.ingeniumecommerce.constant;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

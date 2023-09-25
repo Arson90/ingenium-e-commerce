@@ -39,7 +39,7 @@ public class AccountController {
     }
 
     @PutMapping(RestApiUrl.Page.MY_ACCOUNT + "/update-customer")
-    public ResponseEntity<Void> updateAccountCustomerData(@RequestBody final CustomerRequestDTO customerRequestDTO) {
+    public ResponseEntity<Void> updateAccountCustomerData(@Valid @RequestBody final CustomerRequestDTO customerRequestDTO) {
         this.accountFacade.updateAccountCustomerData(customerRequestDTO);
         return ResponseEntity.ok().build();
     }

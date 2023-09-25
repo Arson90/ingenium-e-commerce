@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-change-passowrd',
-  templateUrl: './change-passowrd.component.html',
-  styleUrls: ['./change-passowrd.component.css']
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css']
 })
-export class ChangePassowrdComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit {
   @Output()
   eventEmitter = new EventEmitter<any>();
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
-import {AuthService} from "../../../services/auth/auth.service";
-import {UserRequestDTO} from "../../../types/UserRequestDTO";
-import {CustomerRequestDTO} from "../../../types/CustomerRequestDTO";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { AuthService } from "../../../services/auth/auth.service";
+import { UserRequestDTO } from "../../../types/UserRequestDTO";
+import { CustomerRequestDTO } from "../../../types/CustomerRequestDTO";
 
 @Component({
   selector: 'app-register-page',
@@ -24,6 +24,8 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit(): void {
     this.initFormGroup();
   }
+
+  //TODO: create new confirmation register page and navigate to it
   register(data: any) {
     this.authService.register(this.prepareData(data)).subscribe(
       res => console.log('HTTP response', res),

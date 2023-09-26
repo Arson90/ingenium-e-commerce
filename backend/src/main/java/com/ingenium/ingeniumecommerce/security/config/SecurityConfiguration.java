@@ -32,8 +32,8 @@ public class SecurityConfiguration{
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/ingenium", "/ingenium/authenticate", "/ingenium/register","/ingenium/products/**").permitAll()
-                .antMatchers("/ingenium/users").hasRole("ADMIN")
+                .antMatchers("/ingenium/authenticate", "/ingenium/register","/ingenium/products/**","/ingenium/orders/**", "/ingenium/account/**").permitAll()
+                .antMatchers("/ingenium/users").hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -1,12 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {Store} from "@ngrx/store";
-import {getBillingAddress, getCounter, getTotalPrice} from "../../../stores/cart-store/selector/selector";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BillingAddress} from "../../../types/BillingAddress";
-import {BillingAddressBuilder} from "../../../types/BillingAddressBuilder";
-import {saveBillingAddress} from "../../../stores/cart-store/actions/checkout.actions";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
+import { getBillingAddress, getCounter, getTotalPrice } from "../../../stores/cart-store/selector/selector";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { BillingAddress } from "../../../types/BillingAddress";
+import { BillingAddressBuilder } from "../../../types/BillingAddressBuilder";
+import { saveBillingAddress } from "../../../stores/cart-store/actions/checkout.actions";
+import { Router } from "@angular/router";
+import { getIsLoggedStatus } from "../../../stores/cart-store/selector/auth.selectors";
+import { UserService } from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-checkout-page',
@@ -17,18 +19,20 @@ import {Router} from "@angular/router";
 export class CheckoutPageComponent implements OnInit {
   items$: Observable<number>;
   totalPrice$: Observable<number>
+  isLogged$: Observable<boolean>
   formData: FormGroup;
   billingAddress$: Observable<BillingAddress>
 
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private router: Router, private userService: UserService) {
     this.items$ = store.select(getCounter);
     this.totalPrice$ = store.select(getTotalPrice);
+    this.isLogged$ = store.select(getIsLoggedStatus);
     this.billingAddress$ = store.select(getBillingAddress);
   }
 
   ngOnInit(): void {
     this.initFormGroup();
-    this.setDefaultValuesForFormGroup();
+    this.setDefaultFormGroupValues();
   }
 
   public onClick(data: any) {
@@ -52,7 +56,32 @@ export class CheckoutPageComponent implements OnInit {
       paymentType: new FormControl("",[Validators.required])
     });
   }
-  private setDefaultValuesForFormGroup() {
+
+  private setDefaultFormGroupValues() {
+    if (this.isLogged$) {
+      this.setDefaultValuesForUser();
+    } else {
+      this.setDefaultValuesForAnonymousUser();
+    }
+  }
+
+  private setDefaultValuesForUser() {
+    this.userService.getMyUser().subscribe(value => {
+      let customer = value.customer;
+      let address = customer.address;
+      this.formData.controls['firstName'].setValue(customer.firstName);
+      this.formData.controls['lastName'].setValue(customer.lastName);
+      this.formData.controls['email'].setValue(customer.email);
+      this.formData.controls['phoneNumber'].setValue(customer.phoneNumber);
+      this.formData.controls['streetName'].setValue(address.streetName);
+      this.formData.controls['streetNumber'].setValue(address.streetNumber);
+      this.formData.controls['apartmentNumber'].setValue(address.apartmentNumber);
+      this.formData.controls['city'].setValue(address.town);
+      this.formData.controls['postalCode'].setValue(address.postalCode);
+      this.formData.controls['country'].setValue(address.country);
+    })
+  }
+  private setDefaultValuesForAnonymousUser() {
     this.billingAddress$.subscribe(value => {
       this.formData.controls['firstName'].setValue(value.firstName);
       this.formData.controls['lastName'].setValue(value.lastName);

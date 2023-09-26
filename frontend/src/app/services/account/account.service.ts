@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from "../../../environments/environment";
-import {AccountData} from "../../types/account";
-import {CustomerData} from "../../types/customer";
-import {AddressData} from "../../types/address";
+import { AccountData } from "../../types/account";
+import { CustomerData } from "../../types/customer";
+import { AddressData } from "../../types/address";
 
 @Injectable({
   providedIn: 'root'

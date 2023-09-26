@@ -1,27 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {BillingAddress} from "../../../types/BillingAddress";
-import {Store} from "@ngrx/store";
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+import { BillingAddress } from "../../../types/BillingAddress";
+import { Store } from "@ngrx/store";
 import {
   getBillingAddress,
   getCartEntries,
   getCounter,
   getTotalPrice
 } from "../../../stores/cart-store/selector/selector";
-import {BillingAddressBuilder} from "../../../types/BillingAddressBuilder";
-import {CartEntry} from "../../../types/CartEntry";
-import {faPaypal} from "@fortawesome/free-brands-svg-icons";
-import {faMoneyBillAlt} from "@fortawesome/free-regular-svg-icons/faMoneyBillAlt";
-import {faCreditCard} from "@fortawesome/free-solid-svg-icons/faCreditCard";
-import {CustomerRequestDTO} from "../../../types/CustomerRequestDTO";
-import {AddressRequestDTO} from "../../../types/AddressRequestDTO";
-import {CartEntryRequestDTO} from "../../../types/CartEntryRequestDTO";
-import {OrderRequestDTO} from "../../../types/OrderRequestDTO";
-import {CartRequestDTO} from "../../../types/CartRequestDTO";
-import {OrderService} from "../../../services/order/order.service";
-import {OrderResponseDTO} from "../../../types/OrderResponseDTO";
-import {PaymentType} from "../../../types/PaymentType";
-import {Router} from "@angular/router";
+import { BillingAddressBuilder} from "../../../types/BillingAddressBuilder";
+import { CartEntry } from "../../../types/CartEntry";
+import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+import { faMoneyBillAlt}  from "@fortawesome/free-regular-svg-icons/faMoneyBillAlt";
+import { faCreditCard } from "@fortawesome/free-solid-svg-icons/faCreditCard";
+import { CustomerRequestDTO } from "../../../types/CustomerRequestDTO";
+import { AddressRequestDTO } from "../../../types/AddressRequestDTO";
+import { CartEntryRequestDTO}  from "../../../types/CartEntryRequestDTO";
+import { OrderRequestDTO } from "../../../types/OrderRequestDTO";
+import { CartRequestDTO } from "../../../types/CartRequestDTO";
+import { OrderService } from "../../../services/order/order.service";
+import { OrderResponseDTO } from "../../../types/OrderResponseDTO";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-order-summary',
@@ -41,7 +40,8 @@ export class OrderSummaryComponent implements OnInit {
   orderResponseDTO: OrderResponseDTO;
   total$: Observable<number>;
   counter$: Observable<number>
-  constructor(private store: Store, private orderService: OrderService, private router: Router) {
+
+  constructor(private store: Store, private orderService: OrderService, private router: Router, private activatedRoute: ActivatedRoute,) {
     this.billingAddress$ = store.select(getBillingAddress);
     this.cartEntries$ = store.select(getCartEntries);
     this.total$ = store.select(getTotalPrice);
@@ -66,9 +66,10 @@ export class OrderSummaryComponent implements OnInit {
       paymentType: paymentType,
       cartEntriesRequestDTO: cartEntries,
     }
-    // this.orderService.createOrder(orderRequestDTO).subscribe(response => {
-    //   this.orderResponseDTO = response;
-    // });
+
+    this.orderService.createOrder(orderRequestDTO).subscribe(response => {
+      this.orderResponseDTO = response;
+    });
     this.router.navigate(['confirmation'])
       .then(nav => {
         console.log(nav);

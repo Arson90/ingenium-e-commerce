@@ -1,5 +1,6 @@
 package com.ingenium.ingeniumecommerce.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ingenium.ingeniumecommerce.customer.Customer;
 import com.ingenium.ingeniumecommerce.enumeration.PaymentType;
 import com.ingenium.ingeniumecommerce.money.Money;
@@ -24,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +40,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate date;
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -48,16 +52,20 @@ public class Order {
     @AttributeOverride(name = "price", column = @Column(name = "total_price"))
     private Money totalPrice;
 
+    public void addOrderDateToOrder(final LocalDate date) {
+        this.date = date;
+    }
+
+    public void addCustomerToOrder(final Customer customer) {
+        this.customer = customer;
+    }
+
     public void addCartEntriesToOrderEntries(final Map<Product, Integer> cartEntries) {
         this.orderEntries = new HashSet<>();
         for (Map.Entry<Product, Integer> entry : cartEntries.entrySet()) {
             final OrderEntry orderEntry = new OrderEntry(entry.getKey(), entry.getValue(), this);
             this.orderEntries.add(orderEntry);
         }
-    }
-
-    public void addCustomerToOrder(final Customer customer) {
-        this.customer = customer;
     }
 
     public void addPaymentTypeToOrder(final PaymentType paymentType) {

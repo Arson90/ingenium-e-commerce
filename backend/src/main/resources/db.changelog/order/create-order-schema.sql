@@ -2,6 +2,7 @@
 -- changeset arek:5 runOnChange:true
 CREATE TABLE orders (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    date DATE,
     customer_id BIGINT NOT NULL,
     payment_type VARCHAR(20),
     total_price DECIMAL(10,2),

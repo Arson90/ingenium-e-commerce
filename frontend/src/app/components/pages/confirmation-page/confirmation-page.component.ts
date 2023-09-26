@@ -17,11 +17,11 @@ export class ConfirmationPageComponent implements OnInit {
     this.clearCartData();
   }
 
-  public clearBillingAddressData() {
+  private clearBillingAddressData() {
     this.store.dispatch(clearBillingAddress());
   }
 
-  public clearCartData() {
+  private clearCartData() {
     this.store.dispatch(clearCartData());
   }
 }

@@ -1,1 +1,25 @@
-<p>my-orders works!</p>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">OrderID</th>
+    <th scope="col">Date</th>
+    <th scope="col">View order details</th>
+    <th scope="col">Total price</th>
+    <th scope="col">Export order to PDF</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let order of orderData">
+    <th scope="row">order.orderId</th>
+    <td>order.orderDate</td>
+    <td>
+      <button class="btn btn-outline-success">Click to view details</button>
+    </td>
+    <td>order.totalPrice</td>
+    <td>
+      <button class="btn btn-outline-success">Click to export</button>
+    </td>
+  </tr>
+  <p>dupa</p>
+  </tbody>
+</table>

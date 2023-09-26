@@ -2,13 +2,13 @@
   <div class="row justify-content-md-center">
     <div class="col-md-auto">
       <div class="card card-body">
-        <p>{{errorMessage}}</p>
+        <p>{{errorMessage$ | async}}</p>
         <div class="row justify-content-md-center">
           <div class="col-md-2 mb-4">
             <fa-icon [icon]="account" class="fa-4x"></fa-icon>
           </div>
         </div>
-        <form [formGroup]="formData" (ngSubmit)="tryToLogin(formData.value)" >
+        <form [formGroup]="loginData" (ngSubmit)="tryToLogin(loginData.value)" >
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="username" class="form-label">Username</label>
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-outline-success mb-4" type="submit" [disabled]="!formData.valid">Login</button>
+            <button class="btn btn-outline-success mb-4" type="submit" [disabled]="!loginData.valid">Login</button>
           </div>
         </form>
       </div>

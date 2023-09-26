@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../services/auth/auth.service";
-import {Store} from "@ngrx/store";
-import {isLogged} from "../../../stores/cart-store/actions/auth.actions";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationRequest} from "../../../types/AuthenticationRequest";
-import {Router} from "@angular/router";
+import { Store } from "@ngrx/store";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AuthenticationRequest } from "../../../types/auth";
+import { Observable } from 'rxjs';
+import * as AuthAction from '../../../stores/actions/auth.actions';
+import * as AuthSelector from '../../../stores/selectors/auth.selectors'
 
 @Component({
   selector: 'app-login-page',
@@ -13,42 +13,33 @@ import {Router} from "@angular/router";
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
+  errorMessage$: Observable<string | null>;
   account = faUser;
-  errorMessage: string;
-  formData: FormGroup;
-  authenticationRequest: AuthenticationRequest = {
-    username: "",
-    password: ""
-  };
-  constructor(private authService: AuthService, private router: Router, private store: Store) { }
+  loginData: FormGroup;
+
+  constructor(private store: Store) {
+    this.errorMessage$ = this.store.select(AuthSelector.getErrorMessage);
+  }
 
   ngOnInit(): void {
-    this.initFormGroup()
+    this.createLoginForm();
   }
 
   tryToLogin(data: any) {
-    this.authenticationRequest.username = data.username;
-    this.authenticationRequest.password = data.password;
-    this.authService.login(this.authenticationRequest).subscribe(
-      response => {
-        this.authService.addUserIdToLocalStorage(String(response.userId))
-        this.authService.addTokenToLocalStorage(response.token)
-        this.store.dispatch(isLogged({isLogged: true}))
-        this.router.navigate([''])
-      },
-      error => {
-        this.errorMessage = error.error
-      }
-    );
+    const authenticationRequest: AuthenticationRequest = {
+      username: data.username,
+      password: data.password
+    }
+    this.store.dispatch(AuthAction.login({authRequest: authenticationRequest}));
   }
 
-  get username() { return this.formData.get('username'); }
-  get password() { return this.formData.get('password'); }
-
-  private initFormGroup() {
-    this.formData = new FormGroup({
+  private createLoginForm() {
+    this.loginData = new FormGroup({
       username: new FormControl("", [Validators.required, Validators.pattern('[a-z A-Z 0-9]*')]),
       password: new FormControl("", [Validators.required, Validators.pattern('[a-z A-Z 0-9]{4,16}')]),
     });
   }
+
+  get username() { return this.loginData.get('username'); }
+  get password() { return this.loginData.get('password'); }
 }

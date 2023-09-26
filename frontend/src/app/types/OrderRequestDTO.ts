@@ -1,7 +1,6 @@
-import {CustomerRequestDTO} from "./CustomerRequestDTO";
-import {AddressRequestDTO} from "./AddressRequestDTO";
-import {CartEntryRequestDTO} from "./CartEntryRequestDTO";
-import {PaymentType} from "./PaymentType";
+import { CustomerRequestDTO } from "./CustomerRequestDTO";
+import { AddressRequestDTO } from "./AddressRequestDTO";
+import { CartEntryRequestDTO } from "./CartEntryRequestDTO";
 
 export interface OrderRequestDTO {
   customerRequestDTO: CustomerRequestDTO;

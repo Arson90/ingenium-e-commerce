@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
 import { Observable, tap } from 'rxjs';
-import {UserRequestDTO} from "../../types/UserRequestDTO";
-import {AuthenticationRequest, AuthenticationResponse} from "../../types/auth";
+import { UserRequestDTO } from "../../types/UserRequestDTO";
+import { AuthenticationRequest, AuthenticationResponse } from "../../types/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,7 @@ export class AuthService {
   get jwt(): string {
     return localStorage.getItem(AuthService.KEY) ?? '';
   }
+
   private set jwt(value: string) {
     localStorage.setItem(AuthService.KEY, value);
   }

@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ProductResponseDTO } from "../../types/ProductResponseDTO";
 import {environment} from "../../../environments/environment";
+import {Product} from "../../types/product";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ProductService {
     return this.http.get<ProductResponseDTO[]>(`${this.apiUrl}`);
   }
 
-  public getProductById(productId: number): Observable<ProductResponseDTO> {
-    return this.http.get<ProductResponseDTO>(`${this.apiUrl}/${productId}`);
+  public getProductById(productId: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${productId}`);
   }
 }

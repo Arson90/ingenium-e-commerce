@@ -92,7 +92,7 @@
 
   <div class="row">
     <div class="d-grid gap-2">
-      <button class="btn btn-outline-success mb-5" type="submit" (click)="createOrder()">Place Order</button>
+      <button class="btn btn-outline-success mb-5" type="submit" [disabled]="(counter$ | async) === 0" (click)="createOrder()">Place Order</button>
     </div>
   </div>
 </div>

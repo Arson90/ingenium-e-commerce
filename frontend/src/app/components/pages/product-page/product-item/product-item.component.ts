@@ -3,8 +3,8 @@ import {ProductResponseDTO} from "../../../../types/ProductResponseDTO";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../../../services/product/product.service";
 import {Store} from "@ngrx/store";
-import {addProduct} from "../../../../stores/cart-store/actions/cart-page.actions";
 import {CartEntry} from "../../../../types/CartEntry";
+import * as CartAction from "../../../../stores/actions/cart.actions"
 
 @Component({
   selector: 'app-product-item',
@@ -34,6 +34,6 @@ export class ProductItemComponent implements OnInit {
 
   addProduct(product: ProductResponseDTO, quantity: string) {
     const cartEntry = new CartEntry(product,parseInt(quantity));
-    this.store.dispatch(addProduct({cartEntry: cartEntry}));
+    this.store.dispatch(CartAction.addProduct({cartEntry: cartEntry}));
   }
 }

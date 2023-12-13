@@ -1,5 +1,6 @@
 package com.ingenium.ingeniumecommerce.security.config;
 
+import com.ingenium.ingeniumecommerce.constant.RestApiUrl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +33,8 @@ public class SecurityConfiguration{
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/ingenium/authenticate", "/ingenium/register","/ingenium/products/**","/ingenium/orders/**", "/ingenium/account/**").permitAll()
-                .antMatchers("/ingenium/users").hasRole("USER")
+                .antMatchers("/ingenium/products/**","/ingenium/account/my-orders", "/ingenium/account/my-account-data", "/ingenium/orders", RestApiUrl.Page.LOGIN, RestApiUrl.Page.REGISTER).permitAll()
+                .antMatchers("/ingenium/users","/ingenium/account/my-orders").hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()

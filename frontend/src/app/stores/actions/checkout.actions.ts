@@ -1,5 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {BillingAddress} from "../../../types/BillingAddress";
+import {BillingAddress} from "../../types/BillingAddress";
 
 export const saveBillingAddress = createAction(
   '[CheckoutComponent] Save billing address',

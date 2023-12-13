@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {clearBillingAddress} from "../../../stores/cart-store/actions/checkout.actions";
-import {clearCartData} from "../../../stores/cart-store/actions/cart-page.actions";
+import {clearBillingAddress} from "../../../stores/actions/checkout.actions";
+import * as CartAction from "../../../stores/actions/cart.actions"
 
 @Component({
   selector: 'app-confirmation-page',
@@ -22,6 +22,6 @@ export class ConfirmationPageComponent implements OnInit {
   }
 
   private clearCartData() {
-    this.store.dispatch(clearCartData());
+    this.store.dispatch(CartAction.clearCartData());
   }
 }

@@ -2,7 +2,7 @@ export interface AddressRequestDTO {
   streetName: string;
   streetNumber: string;
   apartmentNumber: string;
-  town: string;
+  city: string;
   postalCode: string;
   country: string;
 }

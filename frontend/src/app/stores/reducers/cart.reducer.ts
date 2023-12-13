@@ -1,35 +1,35 @@
 import {createReducer, on} from "@ngrx/store";
-import {addProduct, changeQuantity, clearCartData, removeProduct} from "../actions/cart-page.actions";
-import {CartEntry} from "../../../types/CartEntry";
-import {Cart} from "../../../types/Cart";
-import {ProductResponseDTO} from "../../../types/ProductResponseDTO";
+import {CartEntry} from "../../types/CartEntry";
+import {ProductResponseDTO} from "../../types/ProductResponseDTO";
+import * as CartAction from "../../stores/actions/cart.actions"
+import {CartState} from "../../types/cart";
 
-export const initialCartState: Cart = {
+export const initialCartState: CartState = {
   cartEntries: [],
   totalPrice: 0
 }
 
-export const cartReducer = createReducer(
+export const reducer = createReducer(
   initialCartState,
-  on(addProduct, (state, payload) => {
+  on(CartAction.addProduct, (state, payload) => {
     return {
       ...state,
       cartEntries: addCartEntry(state.cartEntries, payload.cartEntry),
     }
   }),
-  on(removeProduct, (state, payload) => {
+  on(CartAction.removeProduct, (state, payload) => {
     return {
       ...state,
       cartEntries: state.cartEntries.filter(cartEntry => cartEntry.product.id !== payload.productId),
     }
   }),
-  on(changeQuantity, (state, payload) => {
+  on(CartAction.changeQuantity, (state, payload) => {
     return {
       ...state,
       cartEntries: getQuantity(state.cartEntries, payload.quantity, payload.product)
     }
   }),
-  on(clearCartData, (state) => {
+  on(CartAction.clearCartData, (state) => {
     return {
       ...state,
       cartEntries: [],

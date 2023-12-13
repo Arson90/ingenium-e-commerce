@@ -10,14 +10,15 @@ import { OrderData } from "../../types/order";
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = environment.api.ORDER;
+  private apiOrderUrl = environment.api.ORDER;
+  private apiAccountUrl = environment.api.ACCOUNT;
   constructor(private http: HttpClient) { }
 
   createOrder(orderRequestDTO: OrderRequestDTO): Observable<OrderResponseDTO> {
-    return this.http.post<OrderResponseDTO>(`${this.apiUrl}`, orderRequestDTO);
+    return this.http.post<OrderResponseDTO>(`${this.apiOrderUrl}`, orderRequestDTO);
   }
 
   getMyOrders(): Observable<OrderData[]> {
-    return this.http.get<OrderData[]>(`${this.apiUrl}/my-orders`);
+    return this.http.get<OrderData[]>(`${this.apiAccountUrl}/my-orders`);
   }
 }

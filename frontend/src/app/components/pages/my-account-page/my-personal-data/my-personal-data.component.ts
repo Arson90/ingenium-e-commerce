@@ -17,7 +17,7 @@ export class MyPersonalDataComponent implements OnInit {
 
   constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['customerData'] !== undefined && changes['customerData']) {
@@ -59,8 +59,8 @@ export class MyPersonalDataComponent implements OnInit {
 
   private createDetailsForm() {
     this.detailsForm = this.fb.group({
-      firstName: [{ value: '', disabled: this.isInputDisabled }, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-      lastName: [{ value: '', disabled: this.isInputDisabled }, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      firstName: [{ value: '', disabled: this.isInputDisabled }, [Validators.required, Validators.pattern('[a-zA-Z]*')]],
+      lastName: [{ value: '', disabled: this.isInputDisabled }, [Validators.required, Validators.pattern('[a-zA-Z]*')]],
       email: [{ value: '', disabled: this.isInputDisabled }, [Validators.required, Validators.email]],
       phoneNumber: [{ value: '', disabled: this.isInputDisabled }, [Validators.required, Validators.pattern('[1-9]{1}[0-9]{8}')]],
     })

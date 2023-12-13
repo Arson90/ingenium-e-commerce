@@ -8,6 +8,7 @@ import {OrderSummaryComponent} from "./components/pages/order-summary/order-summ
 import {ConfirmationPageComponent} from "./components/pages/confirmation-page/confirmation-page.component";
 import {LoginPageComponent} from "./components/pages/login-page/login-page.component";
 import {RegisterPageComponent} from "./components/pages/register-page/register-page.component";
+import {MyAccountPageComponent} from "./components/pages/my-account-page/my-account-page.component";
 
 const routes: Routes = [
   { path: 'cart', component: CartPageComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'product/:productId', component: ProductItemComponent},
   { path: 'login', component: LoginPageComponent},
   { path: 'register', component: RegisterPageComponent},
+  { path: 'my-account', component: MyAccountPageComponent},
   { path: '', redirectTo: 'product-page', pathMatch: 'full'}
 ];
 

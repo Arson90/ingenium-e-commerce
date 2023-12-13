@@ -10,12 +10,12 @@
   </thead>
   <tbody>
   <tr *ngFor="let order of orderData">
-    <th scope="row">order.orderId</th>
-    <td>order.orderDate</td>
+    <th scope="row">{{order.orderId}}</th>
+    <td>{{order.orderDate}}</td>
     <td>
       <button class="btn btn-outline-success">Click to view details</button>
     </td>
-    <td>order.totalPrice</td>
+    <td>{{order.totalPrice}}</td>
     <td>
       <button class="btn btn-outline-success">Click to export</button>
     </td>

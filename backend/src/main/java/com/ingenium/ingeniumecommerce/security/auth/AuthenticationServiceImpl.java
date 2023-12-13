@@ -33,14 +33,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private final UserDetailsService userDetailsService;
 
     @Override
-    public void register(final UserRequestDTO userRequestDTO) {
-        if (this.userQueryRepository.findByUsername(userRequestDTO.getUsername()).isPresent()) {
-            throw UserAlreadyExistsException.userAlreadyExistsException(userRequestDTO.getUsername());
+    public void register(final RegistrationRequest registrationRequest) {
+        if (this.userQueryRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+            throw UserAlreadyExistsException.userAlreadyExistsException(registrationRequest.getUsername());
         }
         final Customer customer = CustomerFactoryUtils
-                .convertCustomerRequestDtoToCustomer(userRequestDTO.getCustomerRequestDTO(), new Address());
-        final String encodedPassword = getEncodedPassword(userRequestDTO.getPassword());
-        final User user = UserFactoryUtils.createUser(userRequestDTO, encodedPassword, customer);
+                .convertCustomerRequestDtoToCustomer(registrationRequest.getCustomerRequestDTO(), new Address());
+        final String encodedPassword = getEncodedPassword(registrationRequest.getPassword());
+        final User user = UserFactoryUtils.createUser(registrationRequest, encodedPassword, customer);
         this.userCommandRepository.save(user);
     }
 

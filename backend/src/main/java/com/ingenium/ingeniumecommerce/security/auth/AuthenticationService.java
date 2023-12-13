@@ -1,10 +1,9 @@
 package com.ingenium.ingeniumecommerce.security.auth;
 
-import com.ingenium.ingeniumecommerce.user.UserRequestDTO;
 import org.springframework.security.core.Authentication;
 
 public interface AuthenticationService {
-    void register(final UserRequestDTO userRequestDTO);
+    void register(final RegistrationRequest registrationRequest);
 
     AuthenticationResponse authenticate(final AuthenticationRequest request);
 

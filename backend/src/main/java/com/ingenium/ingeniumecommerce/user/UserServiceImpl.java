@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> UserNotFoundException.createForUserName(authenticationName));
     }
 
-
     @Override
     public Long changePassword(final String password) {
         final String authenticationName = this.authenticationService.getAuthenticationName();

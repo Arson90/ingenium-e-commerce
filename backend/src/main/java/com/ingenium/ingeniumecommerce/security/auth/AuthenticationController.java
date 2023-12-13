@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,8 +14,8 @@ public class AuthenticationController {
     private final AuthenticationServiceImpl authenticationServiceImpl;
 
     @PostMapping(RestApiUrl.Page.REGISTER)
-    ResponseEntity<Void> register(@RequestBody final UserRequestDTO userRequestDTO) {
-        authenticationServiceImpl.register(userRequestDTO);
+    ResponseEntity<Void> register(@RequestBody final RegistrationRequest registrationRequest) {
+        authenticationServiceImpl.register(registrationRequest);
         return ResponseEntity.ok().build();
     }
 

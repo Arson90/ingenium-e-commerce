@@ -1,24 +1,19 @@
-import { createSelector } from "@ngrx/store";
-import { AuthState } from "../reducers/auth.reducer";
-import { StoreState, getStoreState } from "../state.module";
+import {createFeatureSelector, createSelector} from "@ngrx/store";
+import {AuthState} from "../../types/auth";
 
-//Entire Auth state
-export const getAuthState = createSelector(
-  getStoreState,
-  (storeState: StoreState) => storeState.login
-)
+export const selectAuthState = createFeatureSelector<AuthState>('authState');
 
 export const getUsername = createSelector(
-  getAuthState,
+  selectAuthState,
   (state: AuthState) => state.username
 )
 
 export const isLoggedIn = createSelector(
-  getAuthState,
+  selectAuthState,
   (state: AuthState) => state.loggedIn
 )
 
 export const getErrorMessage = createSelector(
-  getAuthState,
+  selectAuthState,
   (state: AuthState) => state.errorMessage
 )

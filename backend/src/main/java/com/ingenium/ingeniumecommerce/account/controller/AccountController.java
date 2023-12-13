@@ -30,7 +30,7 @@ public class AccountController {
     }
 
     @GetMapping(RestApiUrl.Page.MY_ACCOUNT + "/my-orders")
-    ResponseEntity<List<OrderData>> getMyOrders() {
+    public ResponseEntity<List<OrderData>> getMyOrders() {
         final List<OrderData> orders = this.accountFacade.getMyOrders();
         if (!orders.isEmpty()) {
             return ResponseEntity.ok(orders);

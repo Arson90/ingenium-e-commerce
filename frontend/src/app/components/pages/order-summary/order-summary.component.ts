@@ -1,26 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from "rxjs";
-import { BillingAddress } from "../../../types/BillingAddress";
-import { Store } from "@ngrx/store";
-import {
-  getBillingAddress,
-  getCartEntries,
-  getCounter,
-  getTotalPrice
-} from "../../../stores/cart-store/selector/selector";
-import { BillingAddressBuilder} from "../../../types/BillingAddressBuilder";
-import { CartEntry } from "../../../types/CartEntry";
-import { faPaypal } from "@fortawesome/free-brands-svg-icons";
-import { faMoneyBillAlt}  from "@fortawesome/free-regular-svg-icons/faMoneyBillAlt";
-import { faCreditCard } from "@fortawesome/free-solid-svg-icons/faCreditCard";
-import { CustomerRequestDTO } from "../../../types/CustomerRequestDTO";
-import { AddressRequestDTO } from "../../../types/AddressRequestDTO";
-import { CartEntryRequestDTO}  from "../../../types/CartEntryRequestDTO";
-import { OrderRequestDTO } from "../../../types/OrderRequestDTO";
-import { CartRequestDTO } from "../../../types/CartRequestDTO";
-import { OrderService } from "../../../services/order/order.service";
-import { OrderResponseDTO } from "../../../types/OrderResponseDTO";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {BillingAddress} from "../../../types/BillingAddress";
+import {Store} from "@ngrx/store";
+import {BillingAddressBuilder} from "../../../types/BillingAddressBuilder";
+import {CartEntry} from "../../../types/CartEntry";
+import {faPaypal} from "@fortawesome/free-brands-svg-icons";
+import {faMoneyBillAlt} from "@fortawesome/free-regular-svg-icons/faMoneyBillAlt";
+import {faCreditCard} from "@fortawesome/free-solid-svg-icons/faCreditCard";
+import {CustomerRequestDTO} from "../../../types/CustomerRequestDTO";
+import {AddressRequestDTO} from "../../../types/AddressRequestDTO";
+import {CartEntryRequestDTO} from "../../../types/CartEntryRequestDTO";
+import {OrderRequestDTO} from "../../../types/OrderRequestDTO";
+import {CartRequestDTO} from "../../../types/CartRequestDTO";
+import {OrderService} from "../../../services/order/order.service";
+import {OrderResponseDTO} from "../../../types/OrderResponseDTO";
+import {ActivatedRoute, Router} from "@angular/router";
+import * as CartSelectors from "../../../stores/selectors/cart.selectors"
+import * as CheckoutSelectors from "../../../stores/selectors/checkout.selectors"
 
 @Component({
   selector: 'app-order-summary',
@@ -42,10 +38,10 @@ export class OrderSummaryComponent implements OnInit {
   counter$: Observable<number>
 
   constructor(private store: Store, private orderService: OrderService, private router: Router, private activatedRoute: ActivatedRoute,) {
-    this.billingAddress$ = store.select(getBillingAddress);
-    this.cartEntries$ = store.select(getCartEntries);
-    this.total$ = store.select(getTotalPrice);
-    this.counter$ = store.select(getCounter);
+    this.billingAddress$ = store.select(CheckoutSelectors.getBillingAddress);
+    this.cartEntries$ = store.select(CartSelectors.getCartEntries);
+    this.total$ = store.select(CartSelectors.getTotalPrice);
+    this.counter$ = store.select(CartSelectors.getCounter);
   }
 
   ngOnInit(): void {
@@ -92,7 +88,7 @@ export class OrderSummaryComponent implements OnInit {
       streetName: this.billingAddress.streetName,
       streetNumber: this.billingAddress.streetNumber,
       apartmentNumber: this.billingAddress.apartmentNumber,
-      town: this.billingAddress.city,
+      city: this.billingAddress.city,
       postalCode: this.billingAddress.postalCode,
       country: this.billingAddress.country
     }

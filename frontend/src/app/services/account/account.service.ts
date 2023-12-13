@@ -15,9 +15,7 @@ export class AccountService {
   constructor(private http: HttpClient) { }
 
   getMyAccountData(): Observable<AccountData> {
-    return this.http.get<AccountData>(`${this.apiUrl}/my-account-data`)
-      .pipe(
-        map((res: AccountData) => res));
+    return this.http.get<AccountData>(`${this.apiUrl}/my-account-data`);
   }
 
   updateAccountCustomer(customerData: CustomerData){

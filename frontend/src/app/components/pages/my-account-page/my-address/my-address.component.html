@@ -85,7 +85,8 @@
               </div>
               <button type="button" class="btn btn-outline-primary" [hidden]="!isInputDisabled"
                       (click)="editForm()">Edit</button>
-              <button type="button" class="btn btn-outline-primary ms-1" [disabled]="!addressForm.valid" [hidden]="isInputDisabled" (click)="saveAddress()">Save</button>
+              <button type="button" class="btn btn-outline-primary ms-1" [disabled]="!addressForm.valid" [hidden]="isInputDisabled"
+                      (click)="saveAddress()">Save</button>
               <button type="button" class="btn btn-outline-primary ms-1" [hidden]="isInputDisabled"
                       (click)="cancelEdit()">Cancel</button>
             </div>

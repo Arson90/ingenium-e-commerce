@@ -3,7 +3,7 @@ import { AuthenticationRequest } from "src/app/types/auth"
 
 export const login = createAction(
   '[Login Page] Login',
-  props<{ authRequest: AuthenticationRequest}>()
+  props<{ authRequest: AuthenticationRequest }>()
 );
 
 export const loginSuccess = createAction(

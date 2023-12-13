@@ -12,13 +12,13 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/product-page">Products</a></li>
-        <li class="nav-item"><a class="nav-link" href="/my-account">My Account</a></li>
+        <li *ngIf="isLoggedIn$ | async" class="nav-item"><a class="nav-link" href="/my-account">My Account</a></li>
       </ul>
       <app-cart-items-counter></app-cart-items-counter>
       <ng-container *ngIf="isLoggedIn$ | async; else logoutTemplate">
         <div >
           <form class="d-flex">
-            <button class="btn btn-outline-dark" [routerLink]="['/']" (click)="logout()">
+            <button class="btn btn-outline-dark"  (click)="logout()">
               Logout
             </button>
           </form>

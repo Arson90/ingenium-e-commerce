@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductResponseDTO} from "../../../types/ProductResponseDTO";
-import {faStar} from "@fortawesome/free-solid-svg-icons";
-import {ProductService} from "../../../services/product/product.service";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { ProductService } from "../../../services/product/product.service";
+import { Product } from "../../../types/product";
 
 @Component({
   selector: 'app-product-page',
@@ -9,7 +9,7 @@ import {ProductService} from "../../../services/product/product.service";
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
-  products: ProductResponseDTO[];
+  products: Product[];
   star = faStar;
   constructor(private productService: ProductService) { }
 
@@ -18,6 +18,10 @@ export class ProductPageComponent implements OnInit {
   }
 
   public getProducts(): void {
-    this.productService.getProducts().subscribe((products) => this.products = products);
+    this.productService.getProducts()
+      .subscribe({
+        next: (response: Product[])  => this.products = response,
+        error: (error) => console.error(error.error, ' ', error.status)
+      })
   }
 }

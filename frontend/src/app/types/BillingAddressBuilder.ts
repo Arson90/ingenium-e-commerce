@@ -1,5 +1,4 @@
 import {BillingAddress} from "./BillingAddress";
-import {PaymentType} from "./PaymentType";
 
 export class BillingAddressBuilder {
   billingAddress: BillingAddress;

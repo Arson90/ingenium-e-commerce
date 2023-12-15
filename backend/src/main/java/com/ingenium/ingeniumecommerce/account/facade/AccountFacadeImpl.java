@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class AccountFacadeImpl implements AccountFacade {
-    public static final String UNAUTHORISED_USER_MESSAGE = "Anonymous user tries to open my account page";
+    private static final String UNAUTHORISED_USER_MESSAGE = "Anonymous user tries to open my account page";
     private final AuthenticationService authenticationService;
     private final UserService userService;
     private final CustomerService customerService;

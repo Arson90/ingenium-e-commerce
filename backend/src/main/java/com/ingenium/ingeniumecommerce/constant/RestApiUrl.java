@@ -9,6 +9,7 @@ public final class RestApiUrl {
         public static final String ORDERS = PREFIX + "/orders";
         public static final String LOGIN = PREFIX + "/authenticate";
         public static final String REGISTER = PREFIX + "/register";
+        public static final String PRODUCTS = PREFIX + "/products";
         private Page() {}
     }
 }

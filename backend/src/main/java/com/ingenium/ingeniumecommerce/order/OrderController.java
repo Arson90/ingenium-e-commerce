@@ -1,6 +1,7 @@
 package com.ingenium.ingeniumecommerce.order;
 
 import com.ingenium.ingeniumecommerce.constant.RestApiUrl;
+import com.ingenium.ingeniumecommerce.orderNotification.OrderNotification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +35,8 @@ public class OrderController {
     }
 
     @PostMapping(RestApiUrl.Page.ORDERS)
-    ResponseEntity<OrderResponseDTO> createOrder(@RequestBody final OrderRequestDTO orderRequestDTO) {
-        final OrderResponseDTO orderResponseDTO = this.orderService.createOrder(orderRequestDTO);
-        return ResponseEntity.ok(orderResponseDTO);
+    ResponseEntity<OrderNotification> createOrder(@RequestBody final OrderRequestDTO orderRequestDTO) {
+        final OrderNotification orderNotification = this.orderService.createOrder(orderRequestDTO);
+        return ResponseEntity.ok(orderNotification);
     }
 }

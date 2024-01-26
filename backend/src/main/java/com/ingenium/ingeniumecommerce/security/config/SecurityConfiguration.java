@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -22,22 +23,31 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration{
+public class SecurityConfiguration {
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/ingenium/products/**","/ingenium/account/my-orders", "/ingenium/account/my-account-data", "/ingenium/orders", RestApiUrl.Page.LOGIN, RestApiUrl.Page.REGISTER).permitAll()
-                .antMatchers("/ingenium/users","/ingenium/account/my-orders").hasRole("USER")
-                .anyRequest()
-                .authenticated()
-                .and()
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(
+                                new AntPathRequestMatcher(RestApiUrl.Page.LOGIN),
+                                new AntPathRequestMatcher(RestApiUrl.Page.REGISTER),
+                                new AntPathRequestMatcher(RestApiUrl.Page.PRODUCTS))
+                        .permitAll()
+//                        .requestMatchers(
+//                                new AntPathRequestMatcher(RestApiUrl.Page.ORDERS + "/**"))
+//                        .hasRole("USER")
+                        .requestMatchers(
+                                new AntPathRequestMatcher(RestApiUrl.Page.ORDERS),
+                                new AntPathRequestMatcher("/ingenium/send_notification"))
+                        .hasRole("USER")
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -5,6 +5,8 @@ import com.ingenium.ingeniumecommerce.address.AddressFactoryUtils;
 import com.ingenium.ingeniumecommerce.cartEntry.CartEntryRequestDTO;
 import com.ingenium.ingeniumecommerce.customer.Customer;
 import com.ingenium.ingeniumecommerce.customer.CustomerFactoryUtils;
+import com.ingenium.ingeniumecommerce.orderNotification.OrderNotification;
+import com.ingenium.ingeniumecommerce.orderNotification.OrderNotificationCommandRepository;
 import com.ingenium.ingeniumecommerce.product.Product;
 import com.ingenium.ingeniumecommerce.product.ProductCommandRepository;
 import com.ingenium.ingeniumecommerce.product.ProductNotFoundException;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService{
     private final OrderCommandRepository orderCommandRepository;
     private final OrderQueryRepository orderQueryRepository;
+    private final OrderNotificationCommandRepository orderNotificationCommandRepository;
     private final ProductCommandRepository productCommandRepository;
     private final UserQueryRepository userQueryRepository;
     private final AuthenticationService authenticationService;
@@ -50,7 +53,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     @Transactional
-    public OrderResponseDTO createOrder(final OrderRequestDTO orderRequestDTO) {
+    public OrderNotification createOrder(final OrderRequestDTO orderRequestDTO) {
         final OrderRequestWrapper orderRequestWrapper = prepareData(orderRequestDTO);
         Order order = new Order();
         order.addOrderDateToOrder(LocalDate.now());
@@ -58,8 +61,10 @@ public class OrderServiceImpl implements OrderService{
         order.addCartEntriesToOrderEntries(orderRequestWrapper.getCartEntries());
         order.addPaymentTypeToOrder(orderRequestDTO.getPaymentType());
         order.calculateTotalPrice();
-        order = this.orderCommandRepository.save(order);
-        return OrderFactoryUtils.convertOrderToOrderResponseDto(order);
+        this.orderCommandRepository.save(order);
+        final OrderNotification orderNotification = OrderFactoryUtils.convertOrderToOrderNotification(order);
+        this.orderNotificationCommandRepository.save(orderNotification);
+        return orderNotification;
     }
 
     private OrderRequestWrapper prepareData(final OrderRequestDTO orderRequestDTO) {

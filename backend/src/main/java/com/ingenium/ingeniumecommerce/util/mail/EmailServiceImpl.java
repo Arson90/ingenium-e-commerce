@@ -2,6 +2,7 @@ package com.ingenium.ingeniumecommerce.util.mail;
 
 import com.ingenium.ingeniumecommerce.util.pdf.PDFExportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -20,7 +21,7 @@ public class EmailServiceImpl implements EmailService{
     private final PDFExportService pdfExportService;
 
     @Override
-    public void sendSimpleMail(final EmailDetails details) {
+    public void sendSimpleMail(final EmailDetails details) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@ingenium.com");
         message.setTo(details.getRecipient());
@@ -30,7 +31,7 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
-    public String sendMailWithAttachment(final EmailDetails details) {
+    public void sendMailWithAttachment(final EmailDetails details) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -41,12 +42,8 @@ public class EmailServiceImpl implements EmailService{
             ByteArrayInputStream byteArrayInputStream = pdfExportService.exportPDF(4L);
             helper.addAttachment("Order confirmation", new ByteArrayDataSource(byteArrayInputStream, "application/pdf"));
             javaMailSender.send(message);
-        } catch (MessagingException e) {
-            return "Error while sending mail!!!";
-        } catch (IOException e) {
+        } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }

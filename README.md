@@ -1,3 +1,3 @@
 # Ingenium-e-commerce
 
-This project is being created to the need to individual develop in this area: Java, Spring Boot, Spring Data, Spring Security, Angular, MySQL, Docker.
+Technology stack: Java 11, JUnit5, Spring Boot/Data/Security, Angular, NgRx, JSON Web Token, CQRS, MySQL, Maven, Liquibase

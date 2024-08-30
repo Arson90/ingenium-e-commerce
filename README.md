@@ -13,19 +13,19 @@ The E-Commerce Platform is a private project designed to offer an online shoppin
    
    1.3. **JWT Authentication:** Provides a secure method for verifying user identity and maintaining user sessions.
 
-3. **Product Management:**
+2. **Product Management:**
    
    2.1. **Product Catalog:** Users can browse products, each with details such as name, description, price, and availability.
    
    2.2. **Search and Filters:** Functionality to search for products and apply filters based on name.
 
-5. **Shopping Cart:**
+3. **Shopping Cart:**
    
    3.1. **Add to Cart:** Users can add products to their shopping cart, which keeps track of selected items and their quantities.
    
    3.2. **Cart Management:** Users can view, update, or remove items from their cart as needed.
 
-7. **Checkout Process:**
+4. **Checkout Process:**
    
    4.1. **Order Review:** Users can review their cart before proceeding to checkout.
    
@@ -33,23 +33,23 @@ The E-Commerce Platform is a private project designed to offer an online shoppin
    
    4.3. **Order Confirmation:** After successful payment, users receive an order confirmation.
 
-9. **Order Confirmation:**
+5. **Order Confirmation:**
     
    5.1. **PDF Confirmation:** A confirmation of the order is generated in PDF format.
    
    5.2. **Email Delivery:** The PDF confirmation is sent to the user's registered email address.
 
-11. **User Interface:**
+6. **User Interface:**
     
    6.1. **Angular Frontend:** A responsive and user-friendly interface built using Angular, allowing for smooth navigation and interaction.
     
    6.2. **Interactive Design:** Modern design elements and intuitive navigation to enhance user experience.
 
-13. **Backend and Database:**
+7. **Backend and Database:**
     
-   7.1. **MySQL Database:** A relational database management system used to store user information, product details, order history, and other relevant data.
+   * **MySQL Database:** A relational database management system used to store user information, product details, order history, and other relevant data.
     
-   7.2. **Server-Side Logic:** Business logic and API endpoints implemented to handle user requests, process orders, and interact with the database.
+   * **Server-Side Logic:** Business logic and API endpoints implemented to handle user requests, process orders, and interact with the database.
 
 ## Technology stack: 
 * Java 11

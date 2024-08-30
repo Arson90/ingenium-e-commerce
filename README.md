@@ -7,43 +7,43 @@ The E-Commerce Platform is a private project designed to offer an online shoppin
 
 1. **User Authentication:**
    
-   1.1. **Account Registration:** Users can create new accounts by providing necessary details such as email, password, and personal information.
+   * **Account Registration:** Users can create new accounts by providing necessary details such as email, password, and personal information.
    
-   1.2. **Login:** Secure login functionality using JSON Web Tokens (JWT) for session management and authentication.
+   * **Login:** Secure login functionality using JSON Web Tokens (JWT) for session management and authentication.
    
-   1.3. **JWT Authentication:** Provides a secure method for verifying user identity and maintaining user sessions.
+   * **JWT Authentication:** Provides a secure method for verifying user identity and maintaining user sessions.
 
 2. **Product Management:**
    
-   2.1. **Product Catalog:** Users can browse products, each with details such as name, description, price, and availability.
+   * **Product Catalog:** Users can browse products, each with details such as name, description, price, and availability.
    
-   2.2. **Search and Filters:** Functionality to search for products and apply filters based on name.
+   * **Search and Filters:** Functionality to search for products and apply filters based on name.
 
 3. **Shopping Cart:**
    
-   3.1. **Add to Cart:** Users can add products to their shopping cart, which keeps track of selected items and their quantities.
+   * **Add to Cart:** Users can add products to their shopping cart, which keeps track of selected items and their quantities.
    
-   3.2. **Cart Management:** Users can view, update, or remove items from their cart as needed.
+   * **Cart Management:** Users can view, update, or remove items from their cart as needed.
 
 4. **Checkout Process:**
    
-   4.1. **Order Review:** Users can review their cart before proceeding to checkout.
+   * **Order Review:** Users can review their cart before proceeding to checkout.
    
-   4.2. **Payment:** Users can enter payment details and complete their purchase.
+   * **Payment:** Users can enter payment details and complete their purchase.
    
-   4.3. **Order Confirmation:** After successful payment, users receive an order confirmation.
+   * **Order Confirmation:** After successful payment, users receive an order confirmation.
 
 5. **Order Confirmation:**
     
-   5.1. **PDF Confirmation:** A confirmation of the order is generated in PDF format.
+   * **PDF Confirmation:** A confirmation of the order is generated in PDF format.
    
-   5.2. **Email Delivery:** The PDF confirmation is sent to the user's registered email address.
+   * **Email Delivery:** The PDF confirmation is sent to the user's registered email address.
 
 6. **User Interface:**
     
-   6.1. **Angular Frontend:** A responsive and user-friendly interface built using Angular, allowing for smooth navigation and interaction.
+   * **Angular Frontend:** A responsive and user-friendly interface built using Angular, allowing for smooth navigation and interaction.
     
-   6.2. **Interactive Design:** Modern design elements and intuitive navigation to enhance user experience.
+   * **Interactive Design:** Modern design elements and intuitive navigation to enhance user experience.
 
 7. **Backend and Database:**
     
